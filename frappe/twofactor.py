@@ -152,6 +152,7 @@ def confirm_otp_token(login_manager, otp=None, tmp_id=None):
 def get_verification_obj(user, token, otp_secret):
 	otp_issuer = frappe.db.get_value('System Settings', 'System Settings', 'otp_issuer_name')
 	verification_method = get_verification_method()
+
 	verification_obj = None
 	if verification_method == 'SMS':
 		verification_obj = process_2fa_for_sms(user, token, otp_secret)
@@ -198,6 +199,7 @@ def process_2fa_for_email(user, token, otp_secret, otp_issuer, method='Email'):
 	message = None
 	status = True
 	prompt = ''
+
 	if method == 'OTP App' and not frappe.db.get_default(user + '_otplogin'):
 		'''Sending one-time email for OTP App'''
 		totp_uri = pyotp.TOTP(otp_secret).provisioning_uri(user, issuer_name=otp_issuer)

@@ -53,6 +53,7 @@ def get_transitions(doc, workflow = None, raise_exception=False):
 	return transitions
 
 def get_workflow_safe_globals():
+<<<<<<< HEAD
 	# access to frappe.db.get_value, frappe.db.get_list, and date time utils.
 	return dict(
 		frappe=frappe._dict(
@@ -64,6 +65,16 @@ def get_workflow_safe_globals():
 				get_datetime=frappe.utils.get_datetime,
 				now=frappe.utils.now,
 			),
+=======
+	# access to frappe.db.get_value and frappe.db.get_list
+	return dict(
+		frappe=frappe._dict(
+			db=frappe._dict(
+				get_value=frappe.db.get_value,
+				get_list=frappe.db.get_list
+			),
+			session=frappe.session
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		)
 	)
 
@@ -198,7 +209,11 @@ def bulk_workflow_approval(docnames, doctype, action):
 	from collections import defaultdict
 
 	# dictionaries for logging
+<<<<<<< HEAD
 	failed_transactions = defaultdict(list)
+=======
+	errored_transactions = defaultdict(list)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	successful_transactions = defaultdict(list)
 
 	# WARN: message log is cleared
@@ -219,7 +234,11 @@ def bulk_workflow_approval(docnames, doctype, action):
 				if e.args:
 					message +=  " : {0}".format(e.args[0])
 				message_dict = {"docname": docname, "message": message}
+<<<<<<< HEAD
 				failed_transactions[docname].append(message_dict)
+=======
+				errored_transactions[docname].append(message_dict)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 			frappe.db.rollback()
 			frappe.log_error(frappe.get_traceback(), "Workflow {0} threw an error for {1} {2}".format(action, doctype, docname))
@@ -232,20 +251,34 @@ def bulk_workflow_approval(docnames, doctype, action):
 						message_dict = {"docname": docname, "message": message.get("message")}
 
 						if message.get("raise_exception", False):
+<<<<<<< HEAD
 							failed_transactions[docname].append(message_dict)
+=======
+							errored_transactions[docname].append(message_dict)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 						else:
 							successful_transactions[docname].append(message_dict)
 				else:
 					successful_transactions[docname].append({"docname": docname, "message": None})
 
+<<<<<<< HEAD
 	if failed_transactions and successful_transactions:
 		indicator = "orange"
 	elif failed_transactions:
+=======
+	if errored_transactions and successful_transactions:
+		indicator = "orange"
+	elif errored_transactions:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		indicator  = "red"
 	else:
 		indicator = "green"
 
+<<<<<<< HEAD
 	print_workflow_log(failed_transactions, _("Failed Transactions"), doctype, indicator)
+=======
+	print_workflow_log(errored_transactions, _("Errored Transactions"), doctype, indicator)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	print_workflow_log(successful_transactions, _("Successful Transactions"), doctype, indicator)
 
 def print_workflow_log(messages, title, doctype, indicator):
@@ -263,7 +296,11 @@ def print_workflow_log(messages, title, doctype, indicator):
 				html = "<div>{0}</div>".format(doc)
 			msg += html
 
+<<<<<<< HEAD
 		frappe.msgprint(msg, title=_("Workflow Status"), indicator=indicator, is_minimizable=True)
+=======
+		frappe.msgprint(msg, title=_("Workflow Status"), indicator=indicator)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 @frappe.whitelist()
 def get_common_transition_actions(docs, doctype):
@@ -295,6 +332,10 @@ def show_progress(docnames, message, i, description):
 			description = description
 		)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 def set_workflow_state_on_action(doc, workflow_name, action):
 	workflow = frappe.get_doc('Workflow', workflow_name)
 	workflow_state_field = workflow.workflow_state_field
@@ -313,4 +354,8 @@ def set_workflow_state_on_action(doc, workflow_name, action):
 	for state in workflow.states:
 		if state.doc_status == docstatus:
 			doc.set(workflow_state_field, state.state)
+<<<<<<< HEAD
 			return
+=======
+			return 
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

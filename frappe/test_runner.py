@@ -177,7 +177,26 @@ def run_tests_for_module(module, verbose=False, tests=(), profile=False, junit_x
 			make_test_records(doctype, verbose=verbose)
 
 	return _run_unittest(module, verbose=verbose, tests=tests, profile=profile, junit_xml_output=junit_xml_output)
+<<<<<<< HEAD
 
+=======
+
+def run_setup_wizard_ui_test(app=None, verbose=False, profile=False):
+	'''Run setup wizard UI test using test_test_runner'''
+	frappe.flags.run_setup_wizard_ui_test = 1
+	return run_ui_tests(app=app, test=None, verbose=verbose, profile=profile)
+
+def run_ui_tests(app=None, test=None, test_list=None, verbose=False, profile=False):
+	'''Run a single unit test for UI using test_test_runner'''
+	module = importlib.import_module('frappe.tests.ui.test_test_runner')
+	frappe.flags.ui_test_app = app
+	if test_list:
+		frappe.flags.ui_test_list = test_list
+	else:
+		frappe.flags.ui_test_path = test
+	return _run_unittest(module, verbose=verbose, tests=(), profile=profile)
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 def _run_unittest(modules, verbose=False, tests=(), profile=False, junit_xml_output=False):
 	test_suite = unittest.TestSuite()
 

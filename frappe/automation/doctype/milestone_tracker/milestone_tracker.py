@@ -33,6 +33,7 @@ class MilestoneTracker(Document):
 def evaluate_milestone(doc, event):
 	if (frappe.flags.in_install
 		or frappe.flags.in_migrate
+<<<<<<< HEAD
 		or frappe.flags.in_setup_wizard
 		or doc.doctype in log_types):
 		return
@@ -45,3 +46,10 @@ def get_milestone_trackers(doctype):
 	return frappe.cache_manager.get_doctype_map('Milestone Tracker', doctype,
 		dict(document_type = doctype, disabled=0))
 
+=======
+		or frappe.flags.in_setup_wizard):
+		return
+	for d in frappe.cache_manager.get_doctype_map('Milestone Tracker', doc.doctype,
+		dict(document_type = doc.doctype, disabled=0)):
+		frappe.get_doc('Milestone Tracker', d.name).apply(doc)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

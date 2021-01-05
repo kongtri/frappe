@@ -100,7 +100,10 @@ frappe.ready(function() {
 						if (field.fieldtype === "Link") {
 							field.only_select = true;
 						}
+<<<<<<< HEAD
 						field.is_web_form = true;
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 					});
 
 					if (df.fieldtype === "Attach") {

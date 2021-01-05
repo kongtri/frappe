@@ -55,6 +55,7 @@ class Address(Document):
 
 		return False
 
+<<<<<<< HEAD
 	def validate_preferred_address(self):
 		preferred_fields = ['is_primary_address', 'is_shipping_address']
 
@@ -65,6 +66,13 @@ class Address(Document):
 
 					if address:
 						update_preferred_address(address, field)
+=======
+	def validate_reference(self):
+		if self.is_your_company_address:
+			if not [row for row in self.links if row.link_doctype == "Company"]:
+				frappe.throw(_("Address needs to be linked to a Company. Please add a row for Company in the Links table below."),
+					title =_("Company not Linked"))
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def get_display(self):
 		return get_address_display(self.as_dict())
@@ -264,6 +272,9 @@ def address_query(doctype, txt, searchfield, start, page_len, filters):
 def get_condensed_address(doc):
 	fields = ["address_title", "address_line1", "address_line2", "city", "county", "state", "country"]
 	return ", ".join([doc.get(d) for d in fields if doc.get(d)])
+<<<<<<< HEAD
 
 def update_preferred_address(address, field):
 	frappe.db.set_value('Address', address, field, 0)
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

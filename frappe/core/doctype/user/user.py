@@ -1122,6 +1122,7 @@ def generate_keys(user):
 
 		return {"api_secret": api_secret}
 	frappe.throw(frappe._("Not Permitted"), frappe.PermissionError)
+<<<<<<< HEAD
 
 def update_password_reset_limit(user):
 	generated_link_count = get_generated_link_count(user)
@@ -1135,3 +1136,5 @@ def check_password_reset_limit(user, rate_limit):
 
 def get_generated_link_count(user):
 	return cint(frappe.cache().hget("password_reset_link_count", user)) or 0
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

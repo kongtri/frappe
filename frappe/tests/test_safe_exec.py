@@ -8,6 +8,7 @@ class TestSafeExec(unittest.TestCase):
 
 	def test_internal_attributes(self):
 		self.assertRaises(SyntaxError, safe_exec, '().__class__.__call__')
+<<<<<<< HEAD
 
 	def test_utils(self):
 		_locals = dict(out=None)
@@ -24,3 +25,5 @@ class TestSafeExec(unittest.TestCase):
 		self.assertEqual(_locals['out'][0][0], 'DocType')
 
 		self.assertRaises(frappe.PermissionError, safe_exec, 'frappe.db.sql("update tabToDo set description=NULL")')
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

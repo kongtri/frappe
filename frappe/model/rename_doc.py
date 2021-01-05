@@ -26,7 +26,12 @@ def update_document_title(doctype, docname, title_field=None, old_title=None, ne
 
 	return docname
 
+<<<<<<< HEAD
 def rename_doc(doctype, old, new, force=False, merge=False, ignore_permissions=False, ignore_if_exists=False, show_alert=True):
+=======
+@frappe.whitelist()
+def rename_doc(doctype, old, new, force=False, merge=False, ignore_permissions=False, ignore_if_exists=False):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	"""
 		Renames a doc(dt, old) to doc(dt, new) and
 		updates all linked fields of type "Link"

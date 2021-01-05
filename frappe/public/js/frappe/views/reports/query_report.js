@@ -366,12 +366,15 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 						this.report_settings.html_format = settings.html_format;
 						this.report_settings.execution_time = settings.execution_time || 0;
 						frappe.query_reports[this.report_name] = this.report_settings;
+<<<<<<< HEAD
 
 						if (this.report_doc.filters && !this.report_settings.filters) {
 							// add configured filters
 							this.report_settings.filters = this.report_doc.filters;
 						}
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 						resolve();
 					});
 				}).catch(reject);
@@ -464,8 +467,11 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 			if (df.on_change) f.on_change = df.on_change;
 
 			df.onchange = () => {
+<<<<<<< HEAD
 				this.refresh_filters_dependency();
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 				let current_filters = this.get_filter_values();
 				if (this.previous_filters
 					&& (JSON.stringify(this.previous_filters) === JSON.stringify(current_filters))) {
@@ -629,6 +635,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 		});
 	}
 
+<<<<<<< HEAD
 	render_summary(data) {
 		data.forEach((summary) => {
 			frappe.widget.utils.build_summary_item(summary).appendTo(this.$summary);
@@ -637,6 +644,8 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 		this.$summary.show();
 	}
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	get_query_params() {
 		const query_string = frappe.utils.get_query_string(frappe.get_route_str());
 		const query_params = frappe.utils.get_query_params(query_string);
@@ -738,6 +747,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 
 	get_queued_prepared_reports_warning_message(reports) {
 		const route = `#List/Prepared Report/List?status=Queued&report_name=${this.report_name}`;
+<<<<<<< HEAD
 		const report_link_html = reports.length == 1
 			? `<a class="underline" href="${route}">${__('1 Report')}</a>`
 			: `<a class="underline" href="${route}">${__("{0} Reports", [reports.length])}</a>`;
@@ -750,6 +760,16 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 			<p>
 				${__("Are you sure you want to generate a new report?")}
 				${no_of_reports_html}
+=======
+		const no_of_reports_html = reports.length == 1
+			? `${__('There is ')}<a class="underline" href="${route}">${__('1 Report')}</a>`
+			: `${__('There are ')}<a class="underline" href="${route}">${__(`{} Reports`, [reports.length])}</a>`;
+
+		let warning_message = `
+			<p>
+				${__(`Are you sure you want to generate a new report?
+					{} with the same filters already in the queue:`, [no_of_reports_html])}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			</p>`;
 
 		let get_item_html = item => `<a class="underline" href="#Form/Prepared Report/${item.name}">${item.name}</a>`;
@@ -813,7 +833,10 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 			data.splice(-1, 1);
 		}
 
+<<<<<<< HEAD
 		this.$report.show();
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if (this.datatable && this.datatable.options
 			&& (this.datatable.options.showTotalRow ===this.raw_data.add_total_row)) {
 			this.datatable.options.treeView = this.tree_report;
@@ -891,10 +914,18 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 				});
 			}
 
+<<<<<<< HEAD
 			values.y_fields =
 				values.y_fields
 					.map(d => d.trim())
 					.filter(Boolean);
+=======
+	get_possible_chart_options() {
+		const columns = this.columns;
+		const rows =  this.raw_data.result.filter(value => Object.keys(value).length);
+		const first_row = Array.isArray(rows[0]) ? rows[0] : columns.map(col => rows[0][col.fieldname]);
+		const me = this
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 			return values;
 		}
@@ -1043,11 +1074,15 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 					// applied to Float, Currency fields, needed only for currency formatting.
 					// make first data column have value 'Total'
 					let index = 1;
+<<<<<<< HEAD
 
 					if (this.report_settings.get_datatable_options) {
 						let datatable = this.report_settings.get_datatable_options({});
 						if (datatable && datatable.checkboxColumn) index = 2;
 					}
+=======
+					if (this.datatable && this.datatable.options.checkboxColumn) index = 2;
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 					if (column.colIndex === index && !value) {
 						value = "Total";
@@ -1494,7 +1529,11 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 								insert_after_index: insert_after_index,
 								link_field: this.doctype_field_map[values.doctype],
 								doctype: values.doctype,
+<<<<<<< HEAD
 								options: df.options,
+=======
+								options: df.fieldtype === "Link" ? df.options : undefined,
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 								width: 100
 							});
 
@@ -1542,6 +1581,7 @@ frappe.views.QueryReport = class QueryReport extends frappe.views.BaseList {
 							{
 								fieldtype: 'Data',
 								fieldname: 'report_name',
+								reqd: true,
 								label: __("Report Name"),
 								default: this.report_doc.is_standard == 'No' ? this.report_name : "",
 								reqd: true

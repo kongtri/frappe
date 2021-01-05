@@ -1,7 +1,11 @@
 context('List View', () => {
 	before(() => {
 		cy.login();
+<<<<<<< HEAD
 		cy.visit('/desk#workspace/Website');
+=======
+		cy.visit('/desk');
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		return cy.window().its('frappe').then(frappe => {
 			return frappe.xcall("frappe.tests.ui_test_helpers.setup_workflow");
 		});

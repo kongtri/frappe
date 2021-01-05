@@ -43,4 +43,8 @@ class LetterHead(Document):
 			frappe.db.set_default("default_letter_head_content", self.content)
 		else:
 			frappe.defaults.clear_default('letter_head', self.name)
+<<<<<<< HEAD
 			frappe.defaults.clear_default("default_letter_head_content", self.content)
+=======
+			frappe.defaults.clear_default("default_letter_head_content", self.content)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

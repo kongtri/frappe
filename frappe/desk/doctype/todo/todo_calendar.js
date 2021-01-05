@@ -28,4 +28,7 @@ frappe.views.calendar["ToDo"] = {
 	],
 	get_events_method: "frappe.desk.calendar.get_events"
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

@@ -105,11 +105,18 @@ class IncompatibleApp(ValidationError): pass
 class InvalidDates(ValidationError): pass
 class DataTooLongException(ValidationError): pass
 class FileAlreadyAttachedException(Exception): pass
+<<<<<<< HEAD
 class DocumentAlreadyRestored(Exception): pass
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 class AttachmentLimitReached(Exception): pass
 # OAuth exceptions
 class InvalidAuthorizationHeader(CSRFTokenError): pass
 class InvalidAuthorizationPrefix(CSRFTokenError): pass
+<<<<<<< HEAD
 class InvalidAuthorizationToken(CSRFTokenError): pass
 class InvalidDatabaseFile(ValidationError): pass
 class ExecutableNotFound(FileNotFoundError): pass
+=======
+class InvalidAuthorizationToken(CSRFTokenError): pass
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

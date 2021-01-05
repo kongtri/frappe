@@ -23,7 +23,11 @@ if PY2:
 	reload(sys)
 	sys.setdefaultencoding("utf-8")
 
+<<<<<<< HEAD
 __version__ = '13.0.0-dev'
+=======
+__version__ = '12.13.0'
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 __title__ = "Frappe Framework"
 
 local = Local()
@@ -242,7 +246,12 @@ def get_site_config(sites_path=None, site_path=None):
 				click.secho("{0}/site_config.json is invalid".format(local.site), fg="red")
 				print(error)
 		elif local.site and not local.flags.new_site:
+<<<<<<< HEAD
 			raise IncorrectSitePath("{0} does not exist".format(local.site))
+=======
+			print("Site {0} does not exist".format(local.site))
+			sys.exit(1)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	return _dict(config)
 
@@ -313,7 +322,11 @@ def log(msg):
 
 	debug_log.append(as_unicode(msg))
 
+<<<<<<< HEAD
 def msgprint(msg, title=None, raise_exception=0, as_table=False, as_list=False, indicator=None, alert=False, primary_action=None, is_minimizable=None, wide=None):
+=======
+def msgprint(msg, title=None, raise_exception=0, as_table=False, indicator=None, alert=False, primary_action=None, is_minimizable=None):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	"""Print a message to the user (via HTTP response).
 	Messages are sent in the `__server_messages` property in the
 	response JSON and shown in a pop-up / modal.
@@ -401,12 +414,20 @@ def clear_last_message():
 	if len(local.message_log) > 0:
 		local.message_log = local.message_log[:-1]
 
+<<<<<<< HEAD
 def throw(msg, exc=ValidationError, title=None, is_minimizable=None, wide=None, as_list=False):
+=======
+def throw(msg, exc=ValidationError, title=None, is_minimizable=None):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	"""Throw execption and show message (`msgprint`).
 
 	:param msg: Message.
 	:param exc: Exception class. Default `frappe.ValidationError`"""
+<<<<<<< HEAD
 	msgprint(msg, raise_exception=exc, title=title, indicator='red', is_minimizable=is_minimizable, wide=wide, as_list=as_list)
+=======
+	msgprint(msg, raise_exception=exc, title=title, indicator='red', is_minimizable=is_minimizable)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def emit_js(js, user=False, **kwargs):
 	if user == False:

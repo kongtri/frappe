@@ -12,7 +12,11 @@ import yaml
 import frappe
 from frappe.model.document import get_controller
 from frappe.website.utils import can_cache, delete_page_cache, extract_comment_tag, extract_title
+<<<<<<< HEAD
 from werkzeug.routing import Map, Rule, NotFound
+=======
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def resolve_route(path):
 	"""Returns the page route object based on searching in pages and generators.

@@ -278,6 +278,7 @@ def get_document_email(doctype, name):
 
 def get_automatic_email_link():
 	return frappe.db.get_value("Email Account", {"enable_incoming": 1, "enable_automatic_linking": 1}, "email_id")
+<<<<<<< HEAD
 
 def get_additional_timeline_content(doctype, docname):
 	contents = []
@@ -289,3 +290,5 @@ def get_additional_timeline_content(doctype, docname):
 		contents.extend(frappe.get_attr(method)(doctype, docname) or [])
 
 	return contents
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

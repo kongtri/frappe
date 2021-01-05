@@ -161,6 +161,7 @@ def get_context(context):
 					doc.flags.in_notification_update = False
 			except Exception:
 				frappe.log_error(title='Document update failed', message=frappe.get_traceback())
+<<<<<<< HEAD
 
 	def create_system_notification(self, doc, context):
 		subject = self.subject
@@ -186,6 +187,8 @@ def get_context(context):
 			'attached_file': attachments and json.dumps(attachments[0])
 		}
 		enqueue_create_notification(users, notification_doc)
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def send_an_email(self, doc, context):
 		from email.utils import formataddr
@@ -414,6 +417,7 @@ def evaluate_alert(doc, alert, event):
 			frappe.utils.get_link_to_form('Error Log', error_log.name)))
 
 def get_context(doc):
+<<<<<<< HEAD
 	return {"doc": doc, "nowdate": nowdate, "frappe": frappe._dict(utils=get_safe_globals().get("frappe").get("utils"))}
 
 def get_assignees(doc):
@@ -424,3 +428,6 @@ def get_assignees(doc):
 	recipients = [d.owner for d in assignees]
 
 	return recipients
+=======
+	return {"doc": doc, "nowdate": nowdate, "frappe": frappe._dict(utils=frappe.utils)}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

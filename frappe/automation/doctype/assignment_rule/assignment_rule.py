@@ -180,6 +180,7 @@ def reopen_closed_assignment(doc):
 	return True
 
 def apply(doc, method=None, doctype=None, name=None):
+<<<<<<< HEAD
 	if not doctype:
 		doctype = doc.doctype
 
@@ -187,6 +188,9 @@ def apply(doc, method=None, doctype=None, name=None):
 		or frappe.flags.in_install
 		or frappe.flags.in_setup_wizard
 		or doctype in log_types):
+=======
+	if frappe.flags.in_patch or frappe.flags.in_install or frappe.flags.in_setup_wizard:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		return
 
 	if not doc and doctype and name:
@@ -241,6 +245,7 @@ def apply(doc, method=None, doctype=None, name=None):
 				continue
 
 			if not new_apply:
+<<<<<<< HEAD
 				# only reopen if close condition is not satisfied
 				if not assignment_rule.safe_eval('close_condition', doc):
 					reopen =  reopen_closed_assignment(doc)
@@ -281,6 +286,16 @@ def update_due_date(doc, state=None):
 					'label': _('via Assignment Rule')
 				}
 				todo_doc.save(ignore_permissions=True)
+=======
+				if not assignment_rule.safe_eval('close_condition', doc):
+					reopen = reopen_closed_assignment(doc)
+					if reopen:
+						break
+			close = assignment_rule.apply_close(doc, assignments)
+			if close:
+				break
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def get_assignment_rules():
 	return [d.document_type for d in frappe.db.get_all('Assignment Rule', fields=['document_type'], filters=dict(disabled = 0))]

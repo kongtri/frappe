@@ -74,6 +74,25 @@ This is the text version of this email
 			self.assertTrue(result.count('\n') == result.count("\r"))
 		else:
 			self.assertTrue(True)
+<<<<<<< HEAD
+=======
+
+	def test_rfc_5322_header_is_wrapped_at_998_chars(self):
+		# unfortunately the db can only hold 140 chars so this can't be tested properly. test at max chars anyway.
+		email = get_email_queue(
+			recipients=['test@example.com'],
+			sender='me@example.com',
+			subject='Test Subject',
+			content='<h1>Whatever</h1>',
+			text_content='whatever',
+			message_id="a.really.long.message.id.that.should.not.wrap.until.998.if.it.does.then.exchange.will.break" +
+			".really.long.message.id.that.should.not.wrap.unti")
+		result = safe_decode(prepare_message(email=email, recipient='test@test.com',
+					recipients_list=[]))
+		self.assertTrue(
+			"a.really.long.message.id.that.should.not.wrap.until.998.if.it.does.then.exchange.will.break" +
+			".really.long.message.id.that.should.not.wrap.unti" in result)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def test_image(self):
 		img_signature = '''

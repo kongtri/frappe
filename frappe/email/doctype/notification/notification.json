@@ -127,14 +127,18 @@
    "search_index": 1
   },
   {
-   "depends_on": "eval:doc.event=='Method'",
+   "depends_on": "eval:doc.event=='Method' && doc.document_type",
    "description": "Trigger on valid methods like \"before_insert\", \"after_update\", etc (will depend on the DocType selected)",
    "fieldname": "method",
    "fieldtype": "Data",
    "label": "Trigger Method"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval:doc.document_type && (doc.event==\"Days After\" || doc.event==\"Days Before\")",
+=======
+   "depends_on": "eval: doc.document_type && (doc.event==\"Days After\" || doc.event==\"Days Before\")",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "description": "Send alert if date matches this field's value",
    "fieldname": "date_changed",
    "fieldtype": "Select",
@@ -149,7 +153,11 @@
    "label": "Days Before or After"
   },
   {
+<<<<<<< HEAD
    "depends_on": "eval:doc.document_type && doc.event==\"Value Change\"",
+=======
+   "depends_on": "eval: doc.document_type && doc.event==\"Value Change\"",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "description": "Send alert if this field's value changes",
    "fieldname": "value_changed",
    "fieldtype": "Select",
@@ -279,9 +287,13 @@
   }
  ],
  "icon": "fa fa-envelope",
+<<<<<<< HEAD
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2020-11-24 14:25:43.245677",
+=======
+ "modified": "2020-06-29 15:18:42.646726",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Email",
  "name": "Notification",

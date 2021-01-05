@@ -84,6 +84,7 @@ frappe.Application = Class.extend({
 		if (frappe.user_roles.includes('System Manager')) {
 			this.show_change_log();
 			this.show_update_available();
+<<<<<<< HEAD
 		}
 
 		if (!frappe.boot.developer_mode) {
@@ -92,6 +93,8 @@ frappe.Application = Class.extend({
 				`%c${console_security_message}`,
 				"font-size: large"
 			);
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		}
 
 		this.show_notes();
@@ -500,7 +503,11 @@ frappe.Application = Class.extend({
 		// Iterate over changelog
 		var change_log_dialog = frappe.msgprint({
 			message: frappe.render_template("change_log", {"change_log": change_log}),
+<<<<<<< HEAD
 			title: __("Updated To A New Version 🎉"),
+=======
+			title: __("Updated To New Version 🎉"),
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			wide: true,
 			scroll: true
 		});

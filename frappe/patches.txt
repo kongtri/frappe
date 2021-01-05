@@ -1,4 +1,5 @@
 frappe.patches.v12_0.remove_deprecated_fields_from_doctype #3
+execute:frappe.reload_doc('core', 'doctype', 'version') #2017-04-01
 execute:frappe.db.sql("""update `tabPatch Log` set patch=replace(patch, '.4_0.', '.v4_0.')""") #2014-05-12
 frappe.patches.v5_0.convert_to_barracuda_and_utf8mb4
 execute:frappe.utils.global_search.setup_global_search_table()
@@ -15,8 +16,12 @@ execute:frappe.reload_doc('core', 'doctype', 'custom_docperm')
 execute:frappe.reload_doc('core', 'doctype', 'docperm') #2018-05-29
 execute:frappe.reload_doc('core', 'doctype', 'comment')
 frappe.patches.v8_0.drop_is_custom_from_docperm
+<<<<<<< HEAD
 execute:frappe.reload_doc('core', 'doctype', 'module_def') #2020-08-28
 execute:frappe.reload_doc('core', 'doctype', 'version') #2017-04-01
+=======
+execute:frappe.reload_doc('core', 'doctype', 'module_def') #2017-09-22
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 execute:frappe.reload_doc('email', 'doctype', 'document_follow')
 execute:frappe.reload_doc('core', 'doctype', 'communication_link') #2019-10-02
 execute:frappe.reload_doc('core', 'doctype', 'has_role')
@@ -208,7 +213,11 @@ frappe.patches.v9_1.resave_domain_settings
 frappe.patches.v9_1.revert_domain_settings
 frappe.patches.v9_1.move_feed_to_activity_log
 execute:frappe.delete_doc('Page', 'data-import-tool', ignore_missing=True)
+<<<<<<< HEAD
 frappe.patches.v10_0.reload_countries_and_currencies # 14-10-2020
+=======
+frappe.patches.v10_0.reload_countries_and_currencies # 20-10-2020
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 frappe.patches.v10_0.refactor_social_login_keys
 frappe.patches.v10_0.enable_chat_by_default_within_system_settings
 frappe.patches.v10_0.remove_custom_field_for_disabled_domain
@@ -266,11 +275,16 @@ frappe.patches.v12_0.create_notification_settings_for_user
 frappe.patches.v11_0.make_all_prepared_report_attachments_private #2019-11-26
 frappe.patches.v12_0.setup_email_linking
 frappe.patches.v12_0.fix_home_settings_for_all_users
+<<<<<<< HEAD
 frappe.patches.v12_0.change_existing_dashboard_chart_filters
 frappe.patches.v12_0.set_correct_assign_value_in_docs #2020-07-13
 execute:frappe.delete_doc("Test Runner")
 execute:frappe.delete_doc_if_exists('DocType', 'Google Maps Settings')
 execute:frappe.db.set_default('desktop:home_page', 'workspace')
+=======
+frappe.patches.v12_0.set_correct_assign_value_in_docs #2020-07-13
+execute:frappe.delete_doc_if_exists('DocType', 'Google Maps Settings')
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 execute:frappe.delete_doc_if_exists('DocType', 'GSuite Settings')
 execute:frappe.delete_doc_if_exists('DocType', 'GSuite Templates')
 execute:frappe.delete_doc_if_exists('DocType', 'GCalendar Account')
@@ -278,6 +292,7 @@ execute:frappe.delete_doc_if_exists('DocType', 'GCalendar Settings')
 frappe.patches.v12_0.remove_parent_and_parenttype_from_print_formats
 frappe.patches.v12_0.remove_example_email_thread_notify
 execute:from frappe.desk.page.setup_wizard.install_fixtures import update_genders;update_genders()
+<<<<<<< HEAD
 frappe.patches.v12_0.set_correct_url_in_files
 frappe.patches.v13_0.website_theme_custom_scss
 frappe.patches.v13_0.set_existing_dashboard_charts_as_public
@@ -318,3 +333,10 @@ frappe.patches.v13_0.remove_custom_link
 execute:frappe.delete_doc("DocType", "Footer Item")
 frappe.patches.v13_0.replace_field_target_with_open_in_new_tab
 frappe.patches.v13_0.delete_package_publish_tool
+=======
+frappe.patches.v12_0.email_unsubscribe
+frappe.patches.v12_0.replace_old_data_import
+frappe.patches.v12_0.set_correct_url_in_files
+frappe.patches.v12_0.fix_email_id_formatting
+frappe.patches.v12_0.scrub_custom_report_column_fieldnames
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

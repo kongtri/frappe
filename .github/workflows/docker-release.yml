@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 name: 'Trigger Docker build on release'
+=======
+name: Trigger Docker build on release
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 on:
   release:
     types: [released]
 jobs:
   curl:
+<<<<<<< HEAD
     name: 'Trigger Docker build on release'
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
     runs-on: ubuntu-latest
     container:
       image: alpine:latest

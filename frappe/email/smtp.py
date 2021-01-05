@@ -156,6 +156,10 @@ def _get_email_account(filters):
 	return frappe.get_doc("Email Account", name) if name else None
 
 class SMTPServer:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	def __init__(self, login=None, password=None, server=None, port=None, use_tls=None, use_ssl=None, append_to=None):
 		# get defaults from mail settings
 
@@ -189,6 +193,7 @@ class SMTPServer:
 				self.password = None
 			self.port = self.email_account.smtp_port
 			self.use_tls = self.email_account.use_tls
+			self.use_ssl = cint(self.email_account.use_ssl_for_outgoing)
 			self.sender = self.email_account.email_id
 			self.use_ssl = self.email_account.use_ssl_for_outgoing
 			self.append_emails_to_sent_folder = self.email_account.append_emails_to_sent_folder
@@ -218,7 +223,11 @@ class SMTPServer:
 					self.port = 587
 
 				self._sess = smtplib.SMTP(cstr(self.server or ""),
+<<<<<<< HEAD
 						cint(self.port) or None)
+=======
+					cint(self.port) or None)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 			if not self._sess:
 				err_msg = _('Could not connect to outgoing email server')

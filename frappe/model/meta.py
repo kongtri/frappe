@@ -169,8 +169,12 @@ class Meta(Document):
 
 	def get_valid_columns(self):
 		if not hasattr(self, "_valid_columns"):
+<<<<<<< HEAD
 			table_exists = frappe.db.table_exists(self.name)
 			if self.name in self.special_doctypes and table_exists:
+=======
+			if self.name in ("DocType", "DocField", "DocPerm"):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 				self._valid_columns = get_table_columns(self.name)
 			else:
 				self._valid_columns = self.default_fields + \
@@ -307,11 +311,14 @@ class Meta(Document):
 		self.extend("fields", custom_fields)
 
 	def apply_property_setters(self):
+<<<<<<< HEAD
 		"""
 		Property Setters are set via Customize Form. They override standard properties
 		of the doctype or its child properties like fields, links etc. This method
 		applies the customized properties over the standard meta object
 		"""
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if not frappe.db.table_exists('Property Setter'):
 			return
 

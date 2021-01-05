@@ -99,6 +99,7 @@ def application(request):
 		frappe.monitor.stop(response)
 		frappe.recorder.dump()
 
+<<<<<<< HEAD
 		if hasattr(frappe.local, 'conf') and frappe.local.conf.enable_frappe_logger:
 			frappe.logger("frappe.web", allow_site=frappe.local.site).info({
 				"site": get_site_name(request.host),
@@ -110,6 +111,8 @@ def application(request):
 				"http_status_code": getattr(response, "status_code", "NOTFOUND")
 			})
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if response and hasattr(frappe.local, 'rate_limiter'):
 			response.headers.extend(frappe.local.rate_limiter.headers())
 
@@ -197,8 +200,12 @@ def handle_exception(e):
 
 	else:
 		traceback = "<pre>" + sanitize_html(frappe.get_traceback()) + "</pre>"
+<<<<<<< HEAD
 		# disable traceback in production if flag is set
 		if frappe.local.flags.disable_traceback and not frappe.local.dev_server:
+=======
+		if frappe.local.flags.disable_traceback:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			traceback = ""
 
 		frappe.respond_as_web_page("Server Error",

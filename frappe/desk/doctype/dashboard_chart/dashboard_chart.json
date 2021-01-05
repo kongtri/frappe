@@ -105,8 +105,13 @@
    "options": "Yearly\nQuarterly\nMonthly\nWeekly\nDaily"
   },
   {
+<<<<<<< HEAD
    "default": "0",
    "depends_on": "eval: !['Group By', 'Report'].includes(doc.chart_type)\n",
+=======
+   "default": "1",
+   "depends_on": "eval:doc.chart_type !== 'Group By'",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "fieldname": "timeseries",
    "fieldtype": "Check",
    "label": "Time Series"
@@ -270,8 +275,12 @@
    "label": "Use Report Chart"
   }
  ],
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-07-23 11:10:33.509497",
+=======
+ "modified": "2020-03-17 17:08:12.758690",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Desk",
  "name": "Dashboard Chart",

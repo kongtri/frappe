@@ -34,3 +34,11 @@ frappe.ui.form.on("System Settings", {
 		}
 	}
 });
+
+frappe.ui.form.on("System Settings", "enable_prepared_report_auto_deletion", function(frm) {
+	if (frm.doc.enable_prepared_report_auto_deletion) {
+		if (!frm.doc.prepared_report_expiry_period) {
+			frm.set_value('prepared_report_expiry_period', 7);
+		}
+	}
+});

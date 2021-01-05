@@ -10,7 +10,11 @@ import socket
 import time
 from frappe import _
 from frappe.model.document import Document
+<<<<<<< HEAD
 from frappe.utils import validate_email_address, cint, cstr, get_datetime, DATE_FORMAT, strip, comma_or, sanitize_html, add_days
+=======
+from frappe.utils import validate_email_address, cstr, cint, get_datetime, DATE_FORMAT, strip, comma_or, sanitize_html, add_days
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 from frappe.utils.user import is_system_user
 from frappe.utils.jinja import render_template
 from frappe.email.smtp import SMTPServer
@@ -121,8 +125,12 @@ class EmailAccount(Document):
 			fields = [
 				"name as domain", "use_imap", "email_server",
 				"use_ssl", "smtp_server", "use_tls",
+<<<<<<< HEAD
 				"smtp_port", "incoming_port", "append_emails_to_sent_folder",
 				"use_ssl_for_outgoing"
+=======
+				"smtp_port", "incoming_port", "use_ssl_for_outgoing"
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			]
 			return frappe.db.get_value("Email Domain", domain[1], fields, as_dict=True)
 		except Exception:
@@ -134,12 +142,21 @@ class EmailAccount(Document):
 			if not self.smtp_server:
 				frappe.throw(_("{0} is required").format("SMTP Server"))
 
+<<<<<<< HEAD
 			server = SMTPServer(
 				login = getattr(self, "login_id", None) or self.email_id,
 				server=self.smtp_server,
 				port=cint(self.smtp_port),
 				use_tls=cint(self.use_tls),
 				use_ssl=cint(self.use_ssl_for_outgoing)
+=======
+			server = SMTPServer(login = getattr(self, "login_id", None) \
+					or self.email_id,
+				server = self.smtp_server,
+				port = cint(self.smtp_port),
+				use_tls = cint(self.use_tls),
+				use_ssl = cint(self.use_ssl_for_outgoing)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			)
 			if self.password and not self.no_smtp_authentication:
 				server.password = self.get_password()
@@ -190,6 +207,7 @@ class EmailAccount(Document):
 				'authenticationfailed',
 				'loginfailed',
 			]
+<<<<<<< HEAD
 
 			other_error_codes = [
 				'err[auth]',
@@ -197,6 +215,15 @@ class EmailAccount(Document):
 				'loginviayourwebbrowser'
 			]
 
+=======
+
+			other_error_codes = [
+				'err[auth]',
+				'errtemporaryerror',
+				'loginviayourwebbrowser'
+			]
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			all_error_codes = auth_error_codes + other_error_codes
 
 			if in_receive and any(map(lambda t: t in message, all_error_codes)):
@@ -330,7 +357,10 @@ class EmailAccount(Document):
 						# then do not send notifications for the same email.
 
 						attachments = []
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 						if hasattr(communication, '_attachments'):
 							attachments = [d.file_name for d in communication._attachments]
 

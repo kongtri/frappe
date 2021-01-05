@@ -253,6 +253,7 @@ def add_metatags(context):
 	if "image" not in tags and context.image:
 		tags["image"] = context.image
 
+<<<<<<< HEAD
 	image = tags.get("image")
 	if image:
 		tags["og:image"] = tags["twitter:image"] = tags["image"] = frappe.utils.get_url(image)
@@ -260,6 +261,13 @@ def add_metatags(context):
 
 	if "author" not in tags and context.author:
 		tags["author"] = context.author
+=======
+		image = tags.get('image', context.image or None)
+		if image:
+			tags["og:image"] = tags["twitter:image"] = tags["image"] = frappe.utils.get_url(image)
+
+		tags['og:url'] = tags['url'] = frappe.utils.get_url(context.path)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	tags["og:url"] = tags["url"] = frappe.utils.get_url(context.path)
 

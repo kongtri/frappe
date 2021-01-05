@@ -18,6 +18,71 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_field
 from frappe.custom.doctype.property_setter.property_setter import delete_property_setter
 from frappe.model.docfield import supports_translation
 
+<<<<<<< HEAD
+=======
+doctype_properties = {
+	'search_fields': 'Data',
+	'title_field': 'Data',
+	'image_field': 'Data',
+	'sort_field': 'Data',
+	'sort_order': 'Data',
+	'default_print_format': 'Data',
+	'allow_copy': 'Check',
+	'istable': 'Check',
+	'quick_entry': 'Check',
+	'editable_grid': 'Check',
+	'max_attachments': 'Int',
+	'track_changes': 'Check',
+	'track_views': 'Check',
+	'allow_auto_repeat': 'Check',
+	'allow_import': 'Check'
+}
+
+docfield_properties = {
+	'idx': 'Int',
+	'label': 'Data',
+	'fieldtype': 'Select',
+	'options': 'Text',
+	'fetch_from': 'Small Text',
+	'fetch_if_empty': 'Check',
+	'permlevel': 'Int',
+	'width': 'Data',
+	'print_width': 'Data',
+	'reqd': 'Check',
+	'unique': 'Check',
+	'ignore_user_permissions': 'Check',
+	'in_list_view': 'Check',
+	'in_standard_filter': 'Check',
+	'in_global_search': 'Check',
+	'bold': 'Check',
+	'hidden': 'Check',
+	'collapsible': 'Check',
+	'collapsible_depends_on': 'Data',
+	'print_hide': 'Check',
+	'print_hide_if_no_value': 'Check',
+	'report_hide': 'Check',
+	'allow_on_submit': 'Check',
+	'translatable': 'Check',
+	'depends_on': 'Data',
+	'description': 'Text',
+	'default': 'Text',
+	'precision': 'Select',
+	'read_only': 'Check',
+	'length': 'Int',
+	'columns': 'Int',
+	'remember_last_selected_value': 'Check',
+	'allow_bulk_edit': 'Check',
+	'auto_repeat': 'Link',
+	'allow_in_quick_entry': 'Check'
+}
+
+allowed_fieldtype_change = (('Currency', 'Float', 'Percent'), ('Small Text', 'Data'),
+	('Text', 'Data'), ('Text', 'Text Editor', 'Code', 'Signature', 'HTML Editor'), ('Data', 'Select'),
+	('Text', 'Small Text'), ('Text', 'Data', 'Barcode'), ('Code', 'Geolocation'), ('Table', 'Table MultiSelect'))
+
+allowed_fieldtype_for_options_change = ('Read Only', 'HTML', 'Select', 'Data')
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 class CustomizeForm(Document):
 	def on_update(self):
 		frappe.db.sql("delete from tabSingles where doctype='Customize Form'")
@@ -284,6 +349,7 @@ class CustomizeForm(Document):
 			frappe.db.delete('Property Setter', dict(property=property_name,
 				doc_type=self.doc_type))
 
+<<<<<<< HEAD
 
 	def clear_removed_items(self, doctype, items):
 		'''
@@ -294,6 +360,61 @@ class CustomizeForm(Document):
 				name=('not in', items)))
 		else:
 			frappe.db.delete(doctype, dict(parent=self.doc_type, custom=1))
+=======
+			for property in docfield_properties:
+				if property != "idx" and (df.get(property) or '') != (meta_df[0].get(property) or ''):
+					if property == "fieldtype":
+						self.validate_fieldtype_change(df, meta_df[0].get(property), df.get(property))
+
+					elif property == "allow_on_submit" and df.get(property):
+						if not frappe.db.get_value("DocField",
+							{"parent": self.doc_type, "fieldname": df.fieldname}, "allow_on_submit"):
+							frappe.msgprint(_("Row {0}: Not allowed to enable Allow on Submit for standard fields")\
+								.format(df.idx))
+							continue
+
+					elif property == "reqd" and \
+						((frappe.db.get_value("DocField",
+							{"parent":self.doc_type,"fieldname":df.fieldname}, "reqd") == 1) \
+							and (df.get(property) == 0)):
+						frappe.msgprint(_("Row {0}: Not allowed to disable Mandatory for standard fields")\
+								.format(df.idx))
+						continue
+
+					elif property == "in_list_view" and df.get(property) \
+						and df.fieldtype!="Attach Image" and df.fieldtype in no_value_fields:
+								frappe.msgprint(_("'In List View' not allowed for type {0} in row {1}")
+									.format(df.fieldtype, df.idx))
+								continue
+
+					elif property == "precision" and cint(df.get("precision")) > 6 \
+							and cint(df.get("precision")) > cint(meta_df[0].get("precision")):
+						self.flags.update_db = True
+
+					elif property == "unique":
+						self.flags.update_db = True
+
+					elif (property == "read_only" and cint(df.get("read_only"))==0
+						and frappe.db.get_value("DocField", {"parent": self.doc_type, "fieldname": df.fieldname}, "read_only")==1):
+						# if docfield has read_only checked and user is trying to make it editable, don't allow it
+						frappe.msgprint(_("You cannot unset 'Read Only' for field {0}").format(df.label))
+						continue
+
+					elif property == "options" and df.get("fieldtype") not in allowed_fieldtype_for_options_change:
+						frappe.msgprint(_("You can't set 'Options' for field {0}").format(df.label))
+						continue
+
+					elif property == 'translatable' and not supports_translation(df.get('fieldtype')):
+						frappe.msgprint(_("You can't set 'Translatable' for field {0}").format(df.label))
+						continue
+
+					elif (property == 'in_global_search' and
+						df.in_global_search != meta_df[0].get("in_global_search")):
+						self.flags.rebuild_doctype_for_global_search = True
+
+					self.make_property_setter(property=property, value=df.get(property),
+						property_type=docfield_properties[property], fieldname=df.fieldname)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def update_custom_fields(self):
 		for i, df in enumerate(self.get("fields")):
@@ -400,7 +521,11 @@ class CustomizeForm(Document):
 	def validate_fieldtype_change(self, df, old_value, new_value):
 		allowed = False
 		self.check_length_for_fieldtypes = []
+<<<<<<< HEAD
 		for allowed_changes in ALLOWED_FIELDTYPE_CHANGE:
+=======
+		for allowed_changes in allowed_fieldtype_change:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			if (old_value in allowed_changes and new_value in allowed_changes):
 				allowed = True
 				old_value_length = cint(frappe.db.type_map.get(old_value)[1])
@@ -460,6 +585,7 @@ def reset_customization(doctype):
 			and `field_name`!='naming_series'
 			and `property`!='options'
 		""", doctype)
+<<<<<<< HEAD
 	frappe.clear_cache(doctype=doctype)
 
 doctype_properties = {
@@ -557,3 +683,6 @@ ALLOWED_FIELDTYPE_CHANGE = (
 	('Table', 'Table MultiSelect'))
 
 ALLOWED_OPTIONS_CHANGE = ('Read Only', 'HTML', 'Select', 'Data')
+=======
+	frappe.clear_cache(doctype=doctype)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

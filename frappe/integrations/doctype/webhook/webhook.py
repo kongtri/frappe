@@ -22,7 +22,10 @@ from frappe.utils.safe_exec import get_safe_globals
 
 WEBHOOK_SECRET_HEADER = "X-Frappe-Webhook-Signature"
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 class Webhook(Document):
 	def validate(self):
 		self.validate_docevent()

@@ -69,12 +69,15 @@ def execute_cmd(cmd, from_async=False):
 
 	return frappe.call(method, **frappe.form_dict)
 
+<<<<<<< HEAD
 def is_valid_http_method(method):
 	http_method = frappe.local.request.method
 
 	if http_method not in frappe.allowed_http_methods_for_whitelisted_func[method]:
 		frappe.throw(_("Not permitted"), frappe.PermissionError)
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 def is_whitelisted(method):
 	# check if whitelisted
 	if frappe.session['user'] == 'Guest':
@@ -91,6 +94,13 @@ def is_whitelisted(method):
 	else:
 		if not method in frappe.whitelisted:
 			frappe.throw(_("Not permitted"), frappe.PermissionError)
+
+def is_valid_http_method(method):
+	http_method = frappe.local.request.method
+
+	if http_method not in frappe.allowed_http_methods_for_whitelisted_func[method]:
+		frappe.msgprint(_("Not permitted"))
+		raise frappe.PermissionError('Not Allowed, {0}'.format(method))
 
 @frappe.whitelist(allow_guest=True)
 def version():

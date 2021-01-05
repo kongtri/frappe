@@ -241,10 +241,51 @@ frappe.ui.form.on('Dashboard Chart', {
 	},
 
 	show_filters: function(frm) {
+<<<<<<< HEAD
 		frm.chart_filters = [];
 		frappe.dashboard_utils.get_filters_for_chart_type(frm.doc).then(filters => {
 			if (filters) {
 				frm.chart_filters = filters;
+=======
+		if (frm.chart_filters && frm.chart_filters.length) {
+			frm.trigger('render_filters_table');
+		} else {
+			if (frm.doc.chart_type==='Custom') {
+				if (frm.doc.source) {
+					frappe.xcall('frappe.desk.doctype.dashboard_chart_source.dashboard_chart_source.get_config', {name: frm.doc.source})
+						.then(config => {
+							frappe.dom.eval(config);
+							frm.chart_filters = frappe.dashboards.chart_sources[frm.doc.source].filters;
+							frm.trigger('render_filters_table');
+						});
+				} else {
+					frm.chart_filters = [];
+					frm.trigger('render_filters_table');
+				}
+			} else {
+				// standard filters
+				if (frm.doc.document_type) {
+					frappe.model.with_doctype(frm.doc.document_type, () => {
+						frm.chart_filters = [];
+						frappe.get_meta(frm.doc.document_type).fields.map(df => {
+							if (['Link', 'Select'].includes(df.fieldtype)) {
+								let _df = copy_dict(df);
+
+								// nothing is mandatory
+								_df.reqd = 0;
+								_df.default = null;
+								_df.depends_on = null;
+								_df.read_only = 0;
+								_df.permlevel = 1;
+								_df.hidden = 0;
+
+								frm.chart_filters.push(_df);
+							}
+						});
+						frm.trigger('render_filters_table');
+					});
+				}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			}
 			frm.trigger('render_filters_table');
 
@@ -274,6 +315,7 @@ frappe.ui.form.on('Dashboard Chart', {
 
 		let filters = JSON.parse(frm.doc.filters_json || '[]');
 		var filters_set = false;
+<<<<<<< HEAD
 
 		// Set dynamic filters for reports
 		if (frm.doc.chart_type == 'Report') {
@@ -308,6 +350,13 @@ frappe.ui.form.on('Dashboard Chart', {
 					table.find('tbody').append(filter_row);
 					filters_set = true;
 				});
+=======
+		fields.map(f => {
+			if (filters[f.fieldname]) {
+				const filter_row = $(`<tr><td>${f.label}</td><td>${filters[f.fieldname] || ""}</td></tr>`);
+				table.find('tbody').append(filter_row);
+				filters_set = true;
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			}
 		} else if (frm.chart_filters.length) {
 			fields = frm.chart_filters.filter(f => f.fieldname);

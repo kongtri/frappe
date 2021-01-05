@@ -25,7 +25,12 @@ frappe.ui.Filter = class {
 			['>=', '>='],
 			['<=', '<='],
 			['Between', __('Between')],
+<<<<<<< HEAD
 			['Timespan', __('Timespan')],
+=======
+			['Previous', __('Previous')],
+			['Next', __('Next')],
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		];
 
 		this.nested_set_conditions = [
@@ -40,11 +45,19 @@ frappe.ui.Filter = class {
 		this.invalid_condition_map = {
 			Date: ['like', 'not like'],
 			Datetime: ['like', 'not like'],
+<<<<<<< HEAD
 			Data: ['Between', 'Timespan'],
 			Select: ['like', 'not like', 'Between', 'Timespan'],
 			Link: ['Between', 'Timespan', '>', '<', '>=', '<='],
 			Currency: ['Between', 'Timespan'],
 			Color: ['Between', 'Timespan'],
+=======
+			Data: ['Between', 'Previous', 'Next'],
+			Select: ['like', 'not like', 'Between', 'Previous', 'Next'],
+			Link: ['Between', 'Previous', 'Next', '>', '<', '>=', '<='],
+			Currency: ['Between', 'Previous', 'Next'],
+			Color: ['Between', 'Previous', 'Next'],
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			Check: this.conditions.map((c) => c[0]).filter((c) => c !== '='),
 		};
 	}
@@ -70,10 +83,13 @@ frappe.ui.Filter = class {
 				conditions: this.conditions,
 			})
 		).appendTo(this.parent.find('.filter-edit-area'));
+<<<<<<< HEAD
 
 		this.make_select();
 		this.set_events();
 		this.setup();
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	}
 
 	make_select() {
@@ -241,6 +257,7 @@ frappe.ui.Filter = class {
 		this.fieldselect.selected_doctype = doctype;
 		this.fieldselect.selected_fieldname = fieldname;
 
+<<<<<<< HEAD
 		if (
 			this.filters_config &&
 			this.filters_config[condition] &&
@@ -263,13 +280,19 @@ frappe.ui.Filter = class {
 		} else {
 			this.make_field(df, cur.fieldtype);
 		}
+=======
+		this.make_field(df, cur.fieldtype);
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	}
 
 	make_field(df, old_fieldtype) {
 		let old_text = this.field ? this.field.get_value() : null;
 		this.hide_invalid_conditions(df.fieldtype, df.original_type);
 		this.toggle_nested_set_conditions(df);
-		let field_area = this.filter_edit_area.find('.filter-field').empty().get(0);
+		let field_area = this.filter_edit_area
+			.find('.filter-field')
+			.empty()
+			.get(0);
 		let f = frappe.ui.form.make_control({
 			df: df,
 			parent: field_area,
@@ -285,7 +308,11 @@ frappe.ui.Filter = class {
 		// run on enter
 		$(this.field.wrapper)
 			.find(':input')
+<<<<<<< HEAD
 			.keydown(e => {
+=======
+			.keydown((e) => {
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 				if (e.which == 13 && this.field.df.fieldtype !== 'MultiSelect') {
 					this.on_change();
 				}
@@ -316,7 +343,10 @@ frappe.ui.Filter = class {
 	}
 
 	make_tag() {
+<<<<<<< HEAD
 		if (!this.field) return;
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		this.$filter_tag = this.get_filter_tag_element().insertAfter(
 			this.parent.find('.active-tag-filters .clear-filters')
 		);
@@ -364,11 +394,24 @@ frappe.ui.Filter = class {
 	}
 
 	add_condition_help(condition) {
+<<<<<<< HEAD
 		const description = ['in', 'not in'].includes(condition)
 			? __('values separated by commas')
 			: __('use % as wildcard');
 
 		this.filter_edit_area.find('.filter-description').html(description);
+=======
+		let $desc = this.field.desc_area;
+		if (!$desc) {
+			$desc = $('<div class="text-muted small">').appendTo(this.field.wrapper);
+		}
+		// set description
+		$desc.html(
+			(in_list(['in', 'not in'], condition) === 'in'
+				? __('values separated by commas')
+				: __('use % as wildcard')) + '</div>'
+		);
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	}
 
 	hide_invalid_conditions(fieldtype, original_type) {
@@ -514,12 +557,22 @@ frappe.ui.filter_utils = {
 			df.fieldtype = 'DateRange';
 		}
 		if (
+<<<<<<< HEAD
 			condition == 'Timespan' &&
 			['Date', 'Datetime', 'DateRange', 'Select'].includes(df.fieldtype)
 		) {
 			df.fieldtype = 'Select';
 			df.options = this.get_timespan_options(['Last', 'Today', 'This', 'Next']);
 		}
+=======
+			['Previous', 'Next'].includes(condition) &&
+			['Date', 'Datetime', 'DateRange', 'Select'].includes(df.fieldtype)
+		) {
+			df.fieldtype = 'Select';
+			df.options = this.get_relative_timespan_options();
+		}
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if (condition === 'is') {
 			df.fieldtype = 'Select';
 			df.options = [
@@ -527,6 +580,7 @@ frappe.ui.filter_utils = {
 				{ label: __('Not Set'), value: 'not set' },
 			];
 		}
+<<<<<<< HEAD
 		return;
 	},
 
@@ -554,5 +608,32 @@ frappe.ui.filter_utils = {
 			}
 		});
 		return options;
+=======
+	},
+
+	get_relative_timespan_options() {
+		return [
+			{
+				label: __('1 week'),
+				value: '1 week',
+			},
+			{
+				label: __('1 month'),
+				value: '1 month',
+			},
+			{
+				label: __('3 months'),
+				value: '3 months',
+			},
+			{
+				label: __('6 months'),
+				value: '6 months',
+			},
+			{
+				label: __('1 year'),
+				value: '1 year',
+			},
+		];
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	},
 };

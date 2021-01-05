@@ -76,6 +76,7 @@ class Dashboard {
 	}
 
 	refresh() {
+<<<<<<< HEAD
 		frappe.run_serially([
 			() => this.render_cards(),
 			() => this.render_charts()
@@ -89,6 +90,12 @@ class Dashboard {
 			if (!charts.length) {
 				frappe.msgprint(__('No Permitted Charts on this Dashboard'), __('No Permitted Charts'))
 			}
+=======
+		this.get_dashboard_doc().then((doc) => {
+			this.dashboard_doc = doc;
+			this.charts = this.dashboard_doc.charts;
+			this.chart_objects = [];
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 			frappe.dashboard_utils.get_dashboard_settings().then((settings) => {
 				let chart_config = settings.chart_config? JSON.parse(settings.chart_config): {};
@@ -102,6 +109,7 @@ class Dashboard {
 						}
 					});
 
+<<<<<<< HEAD
 				this.chart_group = new frappe.widget.WidgetGroup({
 					title: null,
 					container: this.container,
@@ -126,6 +134,105 @@ class Dashboard {
 		).then(cards => {
 			if (!cards.length) {
 				return;
+=======
+				frappe.model.with_doc("Dashboard Chart", chart.chart).then( chart_doc => {
+					let dashboard_chart = new DashboardChart(chart_doc, chart_container);
+					this.chart_objects.push(dashboard_chart);
+					dashboard_chart.show();
+				});
+			});
+		});
+	}
+
+	get_dashboard_doc() {
+		return frappe.model.with_doc('Dashboard', this.dashboard_name);
+	}
+
+	set_dropdown() {
+		this.page.clear_menu();
+
+		this.page.add_menu_item(__('Edit'), () => {
+			frappe.set_route('Form', 'Dashboard', frappe.dashboard.dashboard_name);
+		});
+
+		this.page.add_menu_item(__('New'), () => {
+			frappe.new_doc('Dashboard');
+		});
+
+		this.page.add_menu_item(__('Refresh All'), () => {
+			this.chart_objects.forEach(chart => {
+				chart.refresh(true);
+			});
+		});
+
+		frappe.db.get_list("Dashboard").then(dashboards => {
+			dashboards.map(dashboard => {
+				let name = dashboard.name;
+				if(name != this.dashboard_name){
+					this.page.add_menu_item(name, () => frappe.set_route("dashboard", name), 1);
+				}
+			});
+		});
+	}
+}
+
+class DashboardChart {
+	constructor(chart_doc, chart_container) {
+		this.chart_doc = chart_doc;
+		this.container = chart_container;
+	}
+
+	show() {
+		this.get_settings().then(() => {
+			this.prepare_chart_object();
+			this.prepare_container();
+			this.prepare_chart_actions();
+			this.refresh();
+		});
+	}
+
+	refresh(refresh_data) {
+		this.fetch(this.filters, refresh_data).then(data => {
+			this.update_chart_object();
+			this.data = data;
+			this.render();
+		});
+	}
+
+	prepare_container() {
+		const column_width_map = {
+			"Half": "6",
+			"Full": "12",
+		};
+		let columns = column_width_map[this.chart_doc.width];
+		this.chart_container = $(`<div class="col-sm-${columns} chart-column-container">
+			<div class="chart-wrapper">
+				<div class="chart-loading-state text-muted">${__("Loading...")}</div>
+				<div class="chart-empty-state hide text-muted">${__("No Data")}</div>
+			</div>
+		</div>`);
+		this.chart_container.appendTo(this.container);
+
+		let last_synced_text = $(`<span class="text-muted last-synced-text"></span>`);
+		last_synced_text.prependTo(this.chart_container);
+	}
+
+	prepare_chart_actions() {
+		let actions = [
+			{
+				label: __("Refresh"),
+				action: 'action-refresh',
+				handler: () => {
+					this.refresh(true);
+				}
+			},
+			{
+				label: __("Edit..."),
+				action: 'action-edit',
+				handler: () => {
+					frappe.set_route('Form', 'Dashboard Chart', this.chart_doc.name);
+				}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			}
 
 			this.number_cards =

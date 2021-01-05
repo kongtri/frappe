@@ -5,8 +5,13 @@ from __future__ import unicode_literals
 
 import unittest, frappe
 from frappe.utils import getdate, formatdate, get_last_day
+<<<<<<< HEAD
 from frappe.utils.dateutils import get_period_ending, get_period
 from frappe.desk.doctype.dashboard_chart.dashboard_chart import get
+=======
+from frappe.desk.doctype.dashboard_chart.dashboard_chart import (get,
+	get_period_ending)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -53,8 +58,17 @@ class TestDashboardChart(unittest.TestCase):
 		cur_date = datetime.now() - relativedelta(years=1)
 
 		result = get(chart_name='Test Dashboard Chart', refresh=1)
+<<<<<<< HEAD
 
 		for idx in range(13):
+=======
+		self.assertEqual(result.get('labels')[0], formatdate(cur_date.strftime('%Y-%m-%d')))
+
+		if formatdate(cur_date.strftime('%Y-%m-%d')) == formatdate(get_last_day(cur_date).strftime('%Y-%m-%d')):
+			cur_date += relativedelta(months=1)
+
+		for idx in range(1, 13):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			month = get_last_day(cur_date)
 			month = formatdate(month.strftime('%Y-%m-%d'))
 			self.assertEqual(result.get('labels')[idx], get_period(month))
@@ -83,8 +97,17 @@ class TestDashboardChart(unittest.TestCase):
 		cur_date = datetime.now() - relativedelta(years=1)
 
 		result = get(chart_name ='Test Empty Dashboard Chart', refresh=1)
+<<<<<<< HEAD
 
 		for idx in range(13):
+=======
+		self.assertEqual(result.get('labels')[0], formatdate(cur_date.strftime('%Y-%m-%d')))
+
+		if formatdate(cur_date.strftime('%Y-%m-%d')) == formatdate(get_last_day(cur_date).strftime('%Y-%m-%d')):
+			cur_date += relativedelta(months=1)
+
+		for idx in range(1, 13):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			month = get_last_day(cur_date)
 			month = formatdate(month.strftime('%Y-%m-%d'))
 			self.assertEqual(result.get('labels')[idx], get_period(month))
@@ -116,8 +139,17 @@ class TestDashboardChart(unittest.TestCase):
 		cur_date = datetime.now() - relativedelta(years=1)
 
 		result = get(chart_name ='Test Empty Dashboard Chart 2', refresh = 1)
+<<<<<<< HEAD
 
 		for idx in range(13):
+=======
+		self.assertEqual(result.get('labels')[0], formatdate(cur_date.strftime('%Y-%m-%d')))
+
+		if formatdate(cur_date.strftime('%Y-%m-%d')) == formatdate(get_last_day(cur_date).strftime('%Y-%m-%d')):
+			cur_date += relativedelta(months=1)
+
+		for idx in range(1, 13):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			month = get_last_day(cur_date)
 			month = formatdate(month.strftime('%Y-%m-%d'))
 			self.assertEqual(result.get('labels')[idx], get_period(month))
@@ -167,16 +199,29 @@ class TestDashboardChart(unittest.TestCase):
 			time_interval = 'Daily',
 			from_date = datetime(2019, 1, 6),
 			to_date = datetime(2019, 1, 11),
+<<<<<<< HEAD
 			filters_json = '[]',
 			timeseries = 1
 		)).insert()
 
 		result = get(chart_name = 'Test Daily Dashboard Chart', refresh = 1)
+=======
+			filters_json = '{}',
+			timeseries = 1
+		)).insert()
+
+		result = get(chart_name ='Test Daily Dashboard Chart', refresh = 1)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		self.assertEqual(result.get('datasets')[0].get('values'), [200.0, 400.0, 300.0, 0.0, 100.0, 0.0])
 		self.assertEqual(
 			result.get('labels'),
+<<<<<<< HEAD
 			['06-01-19', '07-01-19', '08-01-19', '09-01-19', '10-01-19', '11-01-19']
+=======
+			[formatdate('2019-01-06'), formatdate('2019-01-07'), formatdate('2019-01-08'),\
+			formatdate('2019-01-09'), formatdate('2019-01-10'), formatdate('2019-01-11')]
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		)
 
 		frappe.db.rollback()
@@ -198,17 +243,25 @@ class TestDashboardChart(unittest.TestCase):
 			time_interval = 'Weekly',
 			from_date = datetime(2018, 12, 30),
 			to_date = datetime(2019, 1, 15),
+<<<<<<< HEAD
 			filters_json = '[]',
+=======
+			filters_json = '{}',
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			timeseries = 1
 		)).insert()
 
 		result = get(chart_name ='Test Weekly Dashboard Chart', refresh = 1)
 
 		self.assertEqual(result.get('datasets')[0].get('values'), [50.0, 300.0, 800.0, 0.0])
+<<<<<<< HEAD
 		self.assertEqual(
 			result.get('labels'),
 			['30-12-18', '06-01-19', '13-01-19', '20-01-19']
 		)
+=======
+		self.assertEqual(result.get('labels'), [formatdate('2018-12-30'), formatdate('2019-01-06'), formatdate('2019-01-13'), formatdate('2019-01-20')])
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		frappe.db.rollback()
 
@@ -227,4 +280,8 @@ def create_new_communication(date, rating):
 		'rating': rating,
 		'communication_date': date
 	}
+<<<<<<< HEAD
 	frappe.get_doc(communication).insert()
+=======
+	frappe.get_doc(communication).insert()
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

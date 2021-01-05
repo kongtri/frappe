@@ -3,6 +3,10 @@
  "doctype": "DocType",
  "document_type": "System",
  "editable_grid": 1,
+<<<<<<< HEAD
+=======
+ "engine": "InnoDB",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "field_order": [
   "enabled",
   "send_notifications_to",
@@ -104,7 +108,11 @@
  ],
  "in_create": 1,
  "issingle": 1,
+<<<<<<< HEAD
  "modified": "2019-08-22 16:26:44.468391",
+=======
+ "modified": "2020-04-03 11:11:54.658320",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Integrations",
  "name": "Dropbox Settings",

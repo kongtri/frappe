@@ -52,7 +52,11 @@
 
 body.no-list-sidebar {
 	[data-page-route^="List/"] {
+<<<<<<< HEAD
 		@media (min-width: @screen-sm) {
+=======
+		@media (min-width: @screen-md) {
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			.layout-side-section {
 				display: none;
 			}
@@ -298,10 +302,35 @@ input.list-check-all, input.list-row-checkbox {
 	.awesomplete > ul {
 		min-width: 300px;
 	}
+<<<<<<< HEAD
 }
 
 .frappe-rtl {
 	.restricted-button {
+		margin: auto auto auto 5px;
+		direction: ltr;
+=======
+	.restricted-list {
+		padding: 0px 10px;
+		border: 1px solid @yellow;
+		height: 25px;
+		font-weight: 600;
+		border-radius:  5px;
+		background: lightyellow;
+		color: @text-light;
+		margin: auto 5px auto auto;
+		font-size: @text-small;
+		outline: 0;
+		.octicon {
+			padding-right: 5px;
+			font-size: 12px;
+		}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
+	}
+}
+
+.frappe-rtl {
+	.restricted-list {
 		margin: auto auto auto 5px;
 		direction: ltr;
 	}

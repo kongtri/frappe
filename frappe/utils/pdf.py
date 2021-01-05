@@ -17,7 +17,10 @@ import frappe
 from frappe import _
 from frappe.utils import scrub_urls
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 PDF_CONTENT_ERRORS = ["ContentNotFoundError", "ContentOperationNotPermittedError",
 	"UnknownContentError", "RemoteHostClosedError"]
 
@@ -121,6 +124,7 @@ def prepare_options(html, options):
 	return html, options
 
 
+<<<<<<< HEAD
 def get_cookie_options():
 	options = {}
 	if frappe.session and frappe.session.sid and hasattr(frappe.local, "request"):
@@ -137,6 +141,8 @@ def get_cookie_options():
 
 	return options
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 def read_options_from_html(html):
 	options = {}
 	soup = BeautifulSoup(html, "html5lib")
@@ -200,6 +206,13 @@ def prepare_header_footer(soup):
 
 	return options
 
+<<<<<<< HEAD
+=======
+
+def cleanup(fname, options):
+	if os.path.exists(fname):
+		os.remove(fname)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def cleanup(options):
 	for key in ("header-html", "footer-html", "cookie-jar"):

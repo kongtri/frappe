@@ -96,7 +96,11 @@ frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
 			})
 			.on('scroll', function() {
 				var $input = $('input:focus');
+<<<<<<< HEAD
 				if ($input.length && ['Date', 'Datetime', 'Time'].includes($input.attr('data-fieldtype'))) {
+=======
+				if($input.length && ['Date', 'Datetime', 'Time'].includes($input.attr('data-fieldtype'))) {
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 					$input.blur();
 				}
 			});

@@ -4,6 +4,10 @@
 from __future__ import unicode_literals
 
 import unittest
+<<<<<<< HEAD
+=======
+import six
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 import frappe
 from frappe.core.doctype.data_import.exporter import Exporter
 from frappe.core.doctype.data_import.test_importer import (
@@ -17,6 +21,12 @@ class TestExporter(unittest.TestCase):
 		create_doctype_if_not_exists(doctype_name)
 
 	def test_exports_specified_fields(self):
+<<<<<<< HEAD
+=======
+		if six.PY2:
+			return
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if not frappe.db.exists(doctype_name, "Test"):
 			doc = frappe.get_doc(
 				doctype=doctype_name,
@@ -91,6 +101,12 @@ class TestExporter(unittest.TestCase):
 		self.assertEqual(len(csv_array), 3)
 
 	def test_export_csv_response(self):
+<<<<<<< HEAD
+=======
+		if six.PY2:
+			return
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		e = Exporter(
 			doctype_name,
 			export_fields={doctype_name: ["title", "description"]},

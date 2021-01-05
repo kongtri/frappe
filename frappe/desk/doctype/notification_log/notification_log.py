@@ -6,7 +6,11 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
+<<<<<<< HEAD
 from frappe.desk.doctype.notification_settings.notification_settings import (is_notifications_enabled, is_email_notifications_enabled_for_type, set_seen_value)
+=======
+from frappe.desk.doctype.notification_settings.notification_settings import (is_notifications_enabled, is_email_notifications_enabled_for_type)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 class NotificationLog(Document):
 	def after_insert(self):
@@ -107,6 +111,11 @@ def get_email_header(doc):
 		'Share': _('New Document Shared {0}').format(docname),
 		'Energy Point': _('Energy Point Update on {0}').format(docname),
 	}
+<<<<<<< HEAD
+=======
+
+	return header_map[doc.type or 'Default']
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	return header_map[doc.type or 'Default']
 

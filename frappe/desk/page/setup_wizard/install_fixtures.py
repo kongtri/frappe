@@ -13,7 +13,10 @@ def install():
 	update_salutations()
 	update_global_search_doctypes()
 	setup_email_linking()
+<<<<<<< HEAD
 	sync_dashboards()
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	add_unsubscribe()
 
 @frappe.whitelist()
@@ -49,4 +52,8 @@ def add_unsubscribe():
 		if not frappe.get_all("Email Unsubscribe", filters=unsubscribe):
 			doc = frappe.new_doc("Email Unsubscribe")
 			doc.update(unsubscribe)
+<<<<<<< HEAD
 			doc.insert(ignore_permissions=True)
+=======
+			doc.insert(ignore_permissions=True)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

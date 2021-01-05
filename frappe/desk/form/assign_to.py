@@ -177,7 +177,11 @@ def notify_assignment(assigned_by, owner, doc_type, doc_name, action='CLOSE',
 	title = get_title(doc_type, doc_name)
 	description_html =  "<div>{0}</div>".format(description) if description else None
 
+<<<<<<< HEAD
 	if action == 'CLOSE':
+=======
+	if action=='CLOSE':
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		subject = _('Your assignment on {0} {1} has been removed by {2}')\
 			.format(frappe.bold(doc_type), get_title_html(title), frappe.bold(user_name))
 	else:

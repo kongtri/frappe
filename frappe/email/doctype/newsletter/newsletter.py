@@ -34,19 +34,19 @@ class Newsletter(WebsiteGenerator):
 		if self.email_sent:
 			throw(_("Newsletter has already been sent"))
 
-		self.recipients = self.get_recipients()
+		self.recipients = self.get_valid_recipients()
 
 		if self.recipients:
 			self.queue_all()
 			frappe.msgprint(_("Email queued to {0} recipients").format(len(self.recipients)))
 
 		else:
-			frappe.msgprint(_("Newsletter should have atleast one recipient"))
+			frappe.throw(_("Newsletter should have atleast one recipient"))
 
 	def queue_all(self, test_email=False):
 		if not self.get("recipients"):
 			# in case it is called via worker
-			self.recipients = self.get_recipients()
+			self.recipients = self.get_valid_recipients()
 
 		self.validate_send()
 
@@ -79,6 +79,7 @@ class Newsletter(WebsiteGenerator):
 		if not frappe.flags.in_test:
 			frappe.db.auto_commit_on_many_writes = False
 
+<<<<<<< HEAD
 		if not test_email:
 			self.db_set("email_sent", 1)
 			self.db_set("schedule_send", now_datetime())
@@ -93,12 +94,19 @@ class Newsletter(WebsiteGenerator):
 		}[self.content_type or 'Rich Text']
 
 	def get_recipients(self):
+=======
+	def get_valid_recipients(self):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		"""Get recipients from Email Group"""
 		recipients_list = []
 		for email_group in get_email_groups(self.name):
-			for d in frappe.db.get_all("Email Group Member", ["email"],
+			for d in frappe.db.get_all("Email Group Member", ["name", "email"],
 				{"unsubscribed": 0, "email_group": email_group.email_group}):
-					recipients_list.append(d.email)
+					if not validate_email_address(d.email):
+						doc_link = '<a href="#Form/Email Group Member/{0}">{1}</a>'.format(d.name, d.email)
+						frappe.msgprint(_('Invalid Email Address {0} in Email Group {1}').format(doc_link, email_group.email_group))
+					else:
+						recipients_list.append(d.email)
 		return list(set(recipients_list))
 
 	def validate_send(self):

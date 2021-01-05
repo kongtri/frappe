@@ -63,7 +63,12 @@ frappe.ui.FilterGroup = class {
 	}
 
 	validate_args(doctype, fieldname) {
+<<<<<<< HEAD
 		if (doctype && fieldname
+=======
+
+		if(doctype && fieldname
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			&& !frappe.meta.has_field(doctype, fieldname)
 			&& !frappe.model.std_fields_list.includes(fieldname)) {
 

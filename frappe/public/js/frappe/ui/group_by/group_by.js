@@ -92,6 +92,10 @@ frappe.ui.GroupBy = class {
 	}
 
 	apply_settings(settings) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if (!settings.group_by.startsWith('`tab')) {
 			settings.group_by = '`tab' + this.doctype + '`.`' + settings.group_by + '`';
 		}

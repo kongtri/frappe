@@ -42,10 +42,13 @@ class ModuleDef(Document):
 
 	def on_trash(self):
 		"""Delete module name from modules.txt"""
+<<<<<<< HEAD
 
 		if not frappe.conf.get('developer_mode') or frappe.flags.in_uninstall or self.custom:
 			return
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		modules = None
 		if frappe.local.module_app.get(frappe.scrub(self.name)):
 			with open(frappe.get_app_path(self.app_name, "modules.txt"), "r") as f:
@@ -60,7 +63,10 @@ class ModuleDef(Document):
 
 				frappe.clear_cache()
 				frappe.setup_module_map()
+<<<<<<< HEAD
 
 @frappe.whitelist()
 def get_installed_apps():
 	return json.dumps(frappe.get_installed_apps())
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

@@ -330,6 +330,7 @@ class TestFile(unittest.TestCase):
 			"attached_to_name": attached_to_docname1,
 			"is_private": 1,
 			"content": test_content1}).insert()
+<<<<<<< HEAD
 
 		file2 = frappe.get_doc({
 			"doctype": "File",
@@ -399,3 +400,50 @@ class TestAttachment(unittest.TestCase):
 		})
 
 		self.assertTrue(exists)
+=======
+
+		file2 = frappe.get_doc({
+			"doctype": "File",
+			"file_name": 'file2.txt',
+			"attached_to_doctype": attached_to_doctype2,
+			"attached_to_name": attached_to_docname2,
+			"is_private": 1,
+			"content": test_content1}).insert()
+
+		self.assertEqual(file1.is_private, file2.is_private, 1)
+		self.assertEqual(file1.file_url, file2.file_url)
+		self.assertTrue(os.path.exists(file1.get_full_path()))
+
+		file1.is_private = 0
+		file1.save()
+
+		file2 = frappe.get_doc('File', file2.name)
+
+		self.assertEqual(file1.is_private, file2.is_private, 0)
+		self.assertEqual(file1.file_url, file2.file_url)
+		self.assertTrue(os.path.exists(file2.get_full_path()))
+
+	def test_website_user_file_permission(self):
+		# Website User should be able to attach a file
+		# if they have write access to a document
+		from frappe.core.doctype.file.file import File
+		user = frappe.get_doc(dict(
+			doctype='User',
+			email='test-file-perm@example.com',
+			first_name='Tester'
+		))
+		user.insert(ignore_if_duplicate=True)
+		frappe.set_user('test-file-perm@example.com')
+		txt_file = frappe.get_doc({
+			"doctype": "File",
+			"file_name": 'file3.txt',
+			"attached_to_doctype": 'User',
+			"attached_to_name": user.name,
+			"content": test_content1
+		})
+		txt_file.insert()
+		# creation of file should not fail
+		# because user gets permission via has_web_form_permission
+		self.assertIsInstance(txt_file, File)
+		frappe.set_user('Administrator')
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

@@ -272,10 +272,13 @@ class Document(BaseDocument):
 		if hasattr(self, "__islocal"):
 			delattr(self, "__islocal")
 
+<<<<<<< HEAD
 		# clear unsaved flag
 		if hasattr(self, "__unsaved"):
 			delattr(self, "__unsaved")
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if not (frappe.flags.in_migrate or frappe.local.flags.in_install or frappe.flags.in_setup_wizard):
 			follow_document(self.doctype, self.name, frappe.session.user)
 		return self
@@ -994,7 +997,15 @@ class Document(BaseDocument):
 
 		update_global_search(self)
 
+<<<<<<< HEAD
 		self.save_version()
+
+		self.run_method('on_change')
+=======
+		if getattr(self.meta, 'track_changes', False) and not self.flags.ignore_version \
+			and not self.doctype == 'Version' and not frappe.flags.in_install:
+			self.save_version()
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		self.run_method('on_change')
 
@@ -1076,6 +1087,7 @@ class Document(BaseDocument):
 			check_if_doc_is_dynamically_linked(self, method="Cancel")
 
 	def save_version(self):
+<<<<<<< HEAD
 		"""Save version info"""
 
 		# don't track version under following conditions
@@ -1085,6 +1097,10 @@ class Document(BaseDocument):
 			or frappe.flags.in_install
 			or (not self._doc_before_save and frappe.flags.in_patch)):
 			return
+=======
+		'''Save version info'''
+		if not self._doc_before_save and frappe.flags.in_patch: return
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		version = frappe.new_doc('Version')
 		if not self._doc_before_save:

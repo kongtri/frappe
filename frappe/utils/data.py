@@ -1321,16 +1321,26 @@ def is_subset(list_a, list_b):
 def generate_hash(*args, **kwargs):
 	return frappe.generate_hash(*args, **kwargs)
 
+<<<<<<< HEAD
 def guess_date_format(date_string):
 	DATE_FORMATS = [
 		r"%d/%b/%y",
+=======
+
+
+def guess_date_format(date_string):
+	DATE_FORMATS = [
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		r"%d-%m-%Y",
 		r"%m-%d-%Y",
 		r"%Y-%m-%d",
 		r"%d-%m-%y",
 		r"%m-%d-%y",
 		r"%y-%m-%d",
+<<<<<<< HEAD
 		r"%y-%b-%d",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		r"%d/%m/%Y",
 		r"%m/%d/%Y",
 		r"%Y/%m/%d",
@@ -1395,9 +1405,12 @@ def guess_date_format(date_string):
 
 		if date_format and time_format:
 			return (date_format + ' ' + time_format).strip()
+<<<<<<< HEAD
 
 def validate_json_string(string):
 	try:
 		json.loads(string)
 	except (TypeError, ValueError):
 		raise frappe.ValidationError
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

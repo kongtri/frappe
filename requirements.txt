@@ -7,12 +7,17 @@ braintree==3.57.1
 chardet==3.0.4
 Click==7.0
 coverage==4.5.4
+<<<<<<< HEAD
 croniter==0.3.31
+=======
+croniter==0.3.30
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 cryptography==3.2
 dropbox==9.1.0
 email-reply-parser==0.5.9
 Faker==2.0.4
 future==0.18.2
+<<<<<<< HEAD
 gitdb2==2.0.6;python_version<'3.4'
 GitPython==2.1.15
 git-url-parse==1.2.2
@@ -20,12 +25,25 @@ google-api-python-client==1.9.3
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.4.1
 google-auth==1.18.0
+=======
+GitPython==2.1.15
+gitdb2==2.0.6;python_version<'3.4'
+google-api-python-client==1.9.3
+google-auth-httplib2==0.0.3
+google-auth-oauthlib==0.4.1
+google-auth==1.19.1
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 googlemaps==3.1.1
 gunicorn==19.10.0
 html2text==2016.9.19
 html5lib==1.0.1
+<<<<<<< HEAD
 ipython==7.14.0
 Jinja2==2.11.1
+=======
+ipython==5.8.0
+Jinja2==2.10.3
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 ldap3==2.7
 markdown2==2.3.9
 maxminddb-geolite2==2018.703
@@ -35,10 +53,17 @@ oauthlib==3.1.0
 openpyxl==2.6.4
 passlib==1.7.3
 pdfkit==0.6.1
+<<<<<<< HEAD
 Pillow>=8.0.0
 premailer==3.6.1
 psycopg2-binary==2.8.4
 pyasn1==0.4.8
+=======
+Pillow==6.2.2
+premailer==3.6.1
+psycopg2-binary==2.8.4
+pyasn1==0.4.7
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 PyJWT==1.7.1
 PyMySQL==0.9.3
 pyngrok==4.1.6
@@ -67,6 +92,7 @@ unittest-xml-reporting==2.5.2
 urllib3==1.25.9
 watchdog==0.8.0
 Werkzeug==0.16.1
+<<<<<<< HEAD
 Whoosh==2.7.4
 xlrd==1.2.0
 zxcvbn-python==4.4.24
@@ -75,3 +101,8 @@ paytmchecksum==1.7.0
 wrapt==1.10.11
 razorpay==1.2.0
 rsa>=4.1 # not directly required, pinned by Snyk to avoid a vulnerability
+=======
+xlrd==1.2.0
+zxcvbn-python==4.4.24
+wrapt==1.10.11
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

@@ -87,7 +87,10 @@ def get_value(doctype, fieldname, filters=None, as_dict=True, debug=False, paren
 	if not filters:
 		filters = None
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	if frappe.get_meta(doctype).issingle:
 		value = frappe.db.get_values_from_single(fields, filters, doctype, as_dict=as_dict, debug=debug)
 	else:
@@ -233,7 +236,11 @@ def cancel(doctype, name):
 
 	return wrapper.as_dict()
 
+<<<<<<< HEAD
 @frappe.whitelist(methods=['DELETE', 'POST'])
+=======
+@frappe.whitelist(methods=['POST', 'DELETE'])
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 def delete(doctype, name):
 	'''Delete a remote document
 

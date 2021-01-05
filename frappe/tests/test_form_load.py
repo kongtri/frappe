@@ -24,7 +24,11 @@ class TestFormLoad(unittest.TestCase):
 	def test_fieldlevel_permissions_in_load(self):
 		blog = frappe.get_doc({
 			"doctype": "Blog Post",
+<<<<<<< HEAD
 			"blog_category": "-test-blog-category-1",
+=======
+			"blog_category": "_Test Blog Category 1",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			"blog_intro": "Test Blog Intro",
 			"blogger": "_Test Blogger 1",
 			"content": "Test Blog Content",
@@ -40,12 +44,17 @@ class TestFormLoad(unittest.TestCase):
 		user.remove_roles(*user_roles)
 		user.add_roles('Blogger')
 
+<<<<<<< HEAD
 		blog_post_property_setter = make_property_setter('Blog Post', 'published', 'permlevel', 1, 'Int')
+=======
+		make_property_setter('Blog Post', 'published', 'permlevel', 1, 'Int')
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		reset('Blog Post')
 		add('Blog Post', 'Website Manager', 1)
 		update('Blog Post', 'Website Manager', 1, 'write', 1)
 
 		frappe.set_user(user.name)
+<<<<<<< HEAD
 
 		blog_doc = get_blog(blog.name)
 
@@ -58,6 +67,19 @@ class TestFormLoad(unittest.TestCase):
 		blog_doc.published = 1
 		blog_doc.save()
 
+=======
+
+		blog_doc = get_blog(blog.name)
+
+		self.assertEqual(blog_doc.name, blog.name)
+		# since published field has higher permlevel
+		self.assertEqual(blog_doc.published, None)
+
+		# this will be ignored because user does not
+		# have write access on `published` field (or on permlevel 1 fields)
+		blog_doc.published = 1
+		blog_doc.save()
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		# since published field has higher permlevel
 		self.assertEqual(blog_doc.published, 0)
 
@@ -73,6 +95,7 @@ class TestFormLoad(unittest.TestCase):
 		# now user should be allowed to read field with higher permlevel
 		# (after adding Website Manager role)
 		self.assertEqual(blog_doc.published, 1)
+<<<<<<< HEAD
 
 		frappe.set_user('Administrator')
 
@@ -109,6 +132,41 @@ class TestFormLoad(unittest.TestCase):
 
 		self.assertEqual(contact.phone_nos[0].phone, '123456')
 
+=======
+
+		frappe.set_user('Administrator')
+
+		# reset user roles
+		user.remove_roles('Blogger', 'Website Manager')
+		user.add_roles(*user_roles)
+
+	def test_fieldlevel_permissions_in_load_for_child_table(self):
+		contact = frappe.new_doc('Contact')
+		contact.first_name = '_Test Contact 1'
+		contact.append('phone_nos', {'phone': '123456'})
+		contact.insert()
+
+		user = frappe.get_doc('User', 'test@example.com')
+
+		user_roles = frappe.get_roles()
+		user.remove_roles(*user_roles)
+		user.add_roles('Accounts User')
+
+		make_property_setter('Contact Phone', 'phone', 'permlevel', 1, 'Data')
+		reset('Contact Phone')
+		add('Contact', 'Sales User', 1)
+		update('Contact', 'Sales User', 1, 'write', 1)
+
+		frappe.set_user(user.name)
+
+		contact = frappe.get_doc('Contact', '_Test Contact 1')
+
+		contact.phone_nos[0].phone = '654321'
+		contact.save()
+
+		self.assertEqual(contact.phone_nos[0].phone, '123456')
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		frappe.set_user('Administrator')
 		user.add_roles('Sales User')
 		frappe.set_user(user.name)
@@ -125,8 +183,11 @@ class TestFormLoad(unittest.TestCase):
 		user.remove_roles('Accounts User', 'Sales User')
 		user.add_roles(*user_roles)
 
+<<<<<<< HEAD
 		contact.delete()
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def get_blog(blog_name):
 	frappe.response.docs = []

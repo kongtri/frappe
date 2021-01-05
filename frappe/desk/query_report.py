@@ -15,8 +15,12 @@ from frappe.utils import (
 	cstr,
 	get_html_format,
 	get_url_to_form,
+<<<<<<< HEAD
 	gzip_decompress,
 	format_duration,
+=======
+	gzip_decompress
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 )
 from frappe.model.utils import render_include
 from frappe.translate import send_translations
@@ -25,7 +29,10 @@ from frappe.permissions import get_role_permissions
 from six import string_types, iteritems
 from datetime import timedelta
 from frappe.core.utils import ljust_list
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def get_report_doc(report_name):
 	doc = frappe.get_doc("Report", report_name)
@@ -84,12 +91,21 @@ def generate_report_result(report, filters=None, user=None, custom_columns=None)
 	if report.custom_columns:
 		# saved columns (with custom columns / with different column order)
 		columns = json.loads(report.custom_columns)
+<<<<<<< HEAD
 
 	# unsaved custom_columns
 	if custom_columns:
 		for custom_column in custom_columns:
 			columns.insert(custom_column["insert_after_index"] + 1, custom_column)
 
+=======
+
+	# unsaved custom_columns
+	if custom_columns:
+		for custom_column in custom_columns:
+			columns.insert(custom_column['insert_after_index'] + 1, custom_column)
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	# all columns which are not in original report
 	report_custom_columns = [column for column in columns if column["fieldname"] not in report_column_names]
 
@@ -110,8 +126,12 @@ def generate_report_result(report, filters=None, user=None, custom_columns=None)
 		"report_summary": report_summary,
 		"skip_total_row": skip_total_row or 0,
 		"status": None,
+<<<<<<< HEAD
 		"execution_time": frappe.cache().hget("report_execution_time", report.name)
 		or 0,
+=======
+		"execution_time": frappe.cache().hget('report_execution_time', report.name) or 0
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	}
 
 def normalize_result(result, columns):
@@ -208,12 +228,16 @@ def run(report_name, filters=None, user=None, ignore_prepared_report=False, cust
 
 	result = None
 
+<<<<<<< HEAD
 	if (
 		report.prepared_report
 		and not report.disable_prepared_report
 		and not ignore_prepared_report
 		and not custom_columns
 	):
+=======
+	if report.prepared_report and not report.disable_prepared_report and not ignore_prepared_report and not custom_columns:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if filters:
 			if isinstance(filters, string_types):
 				filters = json.loads(filters)
@@ -226,9 +250,13 @@ def run(report_name, filters=None, user=None, ignore_prepared_report=False, cust
 	else:
 		result = generate_report_result(report, filters, user, custom_columns)
 
+<<<<<<< HEAD
 	result["add_total_row"] = report.add_total_row and not result.get(
 		"skip_total_row", False
 	)
+=======
+	result["add_total_row"] = report.add_total_row and not result.get('skip_total_row', False)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	return result
 
@@ -245,9 +273,14 @@ def add_custom_column_data(custom_columns, result):
 				if not row_reference:
 					continue
 				row[column.get('fieldname')] = custom_column_data.get(key).get(row_reference)
+<<<<<<< HEAD
 
 	return result
 
+=======
+
+	return result
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def get_prepared_report_result(report, filters, dn="", user=None):
 	latest_report_data = {}
@@ -263,9 +296,15 @@ def get_prepared_report_result(report, filters, dn="", user=None):
 				"status": "Completed",
 				"filters": json.dumps(filters),
 				"owner": user,
+<<<<<<< HEAD
 				"report_name": report.get("custom_report") or report.get("report_name"),
 			},
 			order_by="creation desc",
+=======
+				"report_name": report.get('custom_report') or report.get('report_name')
+			},
+			order_by = 'creation desc'
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		)
 
 		if doc_list:
@@ -332,15 +371,25 @@ def export_query():
 		data = run(report_name, filters, custom_columns=custom_columns)
 		data = frappe._dict(data)
 		if not data.columns:
+<<<<<<< HEAD
 			frappe.respond_as_web_page(
 				_("No data to export"),
 				_("You can try changing the filters of your report."),
 			)
+=======
+			frappe.respond_as_web_page(_("No data to export"),
+			_("You can try changing the filters of your report."))
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			return
 
 		columns = get_columns_dict(data.columns)
 
 		from frappe.utils.xlsxutils import make_xlsx
+<<<<<<< HEAD
+=======
+		xlsx_data, column_widths = build_xlsx_data(columns, data, visible_idx, include_indentation)
+		xlsx_file = make_xlsx(xlsx_data, "Query Report", column_widths=column_widths)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		data["result"] = handle_duration_fieldtype_values(
 			data.get("result"), data.get("columns")
@@ -412,7 +461,10 @@ def build_xlsx_data(columns, data, visible_idx, include_indentation):
 			result.append(row_data)
 
 	return result, column_widths
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def add_total_row(result, columns, meta=None):
 	total_row = [""] * len(columns)
@@ -489,7 +541,13 @@ def get_data_for_custom_field(doctype, field):
 	if not frappe.has_permission(doctype, "read"):
 		frappe.throw(_("Not Permitted"), frappe.PermissionError)
 
+<<<<<<< HEAD
 	value_map = frappe._dict(frappe.get_all(doctype, fields=["name", field], as_list=1))
+=======
+	value_map = frappe._dict(frappe.get_all(doctype,
+		fields=["name", field],
+		as_list=1))
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	return value_map
 
@@ -706,6 +764,7 @@ def get_columns_dict(columns):
 
 	return columns_dict
 
+<<<<<<< HEAD
 
 def get_column_as_dict(col):
 	col_dict = frappe._dict()
@@ -732,6 +791,32 @@ def get_column_as_dict(col):
 
 	return col_dict
 
+=======
+def get_column_as_dict(col):
+	col_dict = frappe._dict()
+
+	# string
+	if isinstance(col, string_types):
+		col = col.split(":")
+		if len(col) > 1:
+			if "/" in col[1]:
+				col_dict["fieldtype"], col_dict["options"] = col[1].split("/")
+			else:
+				col_dict["fieldtype"] = col[1]
+			if len(col) == 3:
+				col_dict["width"] = col[2]
+
+		col_dict["label"] = col[0]
+		col_dict["fieldname"] = frappe.scrub(col[0])
+
+	# dict
+	else:
+		col_dict.update(col)
+		if "fieldname" not in col_dict:
+			col_dict["fieldname"] = frappe.scrub(col_dict["label"])
+
+	return col_dict
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def get_user_match_filters(doctypes, user):
 	match_filters = {}

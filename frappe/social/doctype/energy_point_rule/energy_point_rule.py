@@ -87,8 +87,12 @@ def process_energy_points(doc, state):
 		or frappe.flags.in_install
 		or frappe.flags.in_migrate
 		or frappe.flags.in_import
+<<<<<<< HEAD
 		or frappe.flags.in_setup_wizard
 		or doc.doctype in log_types):
+=======
+		or frappe.flags.in_setup_wizard):
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		return
 
 	if not is_energy_point_enabled():

@@ -49,7 +49,11 @@ def enqueue_events_for_all_sites():
 
 	for site in sites:
 		try:
+<<<<<<< HEAD
 			enqueue_events_for_site(site=site)
+=======
+			enqueue_events_for_site(site=site, queued_jobs=jobs_per_site[site])
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		except Exception as e:
 			print(e.__class__, 'Failed to enqueue events for site: {}'.format(site))
 

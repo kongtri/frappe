@@ -66,6 +66,7 @@ export default class Grid {
 			</div>
 			<div class="small form-clickable-section grid-footer">
 				<div class="row">
+<<<<<<< HEAD
 					<div class="col-sm-5 grid-buttons">
 						<button class="btn btn-xs btn-danger grid-remove-rows hidden"
 							style="margin-right: 4px;"
@@ -77,14 +78,24 @@ export default class Grid {
 							data-action="delete_all_rows">
 							${__("Delete All")}
 						</button>
+=======
+					<div class="col-sm-6 grid-buttons">
+						<button class="btn btn-xs btn-danger grid-remove-rows hidden"
+							style="margin-right: 4px;">
+							${__("Delete")}</button>
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 						<button class="grid-add-multiple-rows btn btn-xs btn-default hidden"
 							style="margin-right: 4px;">
 							${__("Add Multiple")}</a>
 						</button>
 						<!-- hack to allow firefox include this in tabs -->
 						<button class="btn btn-xs btn-default grid-add-row">
+<<<<<<< HEAD
 							${__("Add Row")}
 						</button>
+=======
+							${__("Add Row")}</button>
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 					</div>
 					<div class="col-sm-4 grid-pagination">
 					</div>

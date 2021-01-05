@@ -66,6 +66,7 @@ def get_email_address(user=None):
 def get_formatted_email(user, mail=None):
 	"""get Email Address of user formatted as: `John Doe <johndoe@example.com>`"""
 	fullname = get_fullname(user)
+<<<<<<< HEAD
 
 	if not mail:
 		mail = get_email_address(user) or validate_email_address(user)
@@ -74,6 +75,11 @@ def get_formatted_email(user, mail=None):
 		return ''
 	else:
 		return cstr(make_header(decode_header(formataddr((fullname, mail)))))
+=======
+	if not mail:
+		mail = get_email_address(user)
+	return cstr(make_header(decode_header(formataddr((fullname, mail)))))
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def extract_email_id(email):
 	"""fetch only the email part of the Email Address"""

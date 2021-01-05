@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
  "actions": [],
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "autoname": "hash",
  "creation": "2013-02-22 01:27:32",
  "doctype": "DocType",
@@ -11,18 +14,27 @@
   "label",
   "fieldtype",
   "fieldname",
+<<<<<<< HEAD
   "non_negative",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   "reqd",
   "unique",
   "in_list_view",
   "in_standard_filter",
   "in_global_search",
+<<<<<<< HEAD
   "in_preview",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   "bold",
   "allow_in_quick_entry",
   "translatable",
   "column_break_7",
+<<<<<<< HEAD
   "default",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   "precision",
   "length",
   "options",
@@ -41,6 +53,7 @@
   "allow_on_submit",
   "report_hide",
   "remember_last_selected_value",
+<<<<<<< HEAD
   "hide_border",
   "property_depends_on_section",
   "mandatory_depends_on",
@@ -50,6 +63,11 @@
   "in_filter",
   "hide_seconds",
   "hide_days",
+=======
+  "display",
+  "default",
+  "in_filter",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   "column_break_21",
   "description",
   "print_hide",
@@ -82,7 +100,11 @@
    "label": "Type",
    "oldfieldname": "fieldtype",
    "oldfieldtype": "Select",
+<<<<<<< HEAD
    "options": "Attach\nAttach Image\nBarcode\nButton\nCheck\nCode\nColor\nColumn Break\nCurrency\nData\nDate\nDatetime\nDuration\nDynamic Link\nFloat\nFold\nGeolocation\nHeading\nHTML\nHTML Editor\nImage\nInt\nLink\nLong Text\nMarkdown Editor\nPassword\nPercent\nRating\nRead Only\nSection Break\nSelect\nSignature\nSmall Text\nTable\nTable MultiSelect\nText\nText Editor\nTime",
+=======
+   "options": "Attach\nAttach Image\nBarcode\nButton\nCheck\nCode\nColor\nColumn Break\nCurrency\nData\nDate\nDatetime\nDynamic Link\nFloat\nFold\nGeolocation\nHeading\nHTML\nHTML Editor\nImage\nInt\nLink\nLong Text\nMarkdown Editor\nPassword\nPercent\nRating\nRead Only\nSection Break\nSelect\nSignature\nSmall Text\nTable\nTable MultiSelect\nText\nText Editor\nTime",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "reqd": 1,
    "search_index": 1
   },
@@ -98,10 +120,15 @@
   },
   {
    "default": "0",
+<<<<<<< HEAD
    "depends_on": "eval:!in_list([\"Section Break\", \"Column Break\", \"Button\", \"HTML\"], doc.fieldtype)",
    "fieldname": "reqd",
    "fieldtype": "Check",
    "in_list_view": 1,
+=======
+   "fieldname": "reqd",
+   "fieldtype": "Check",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "label": "Mandatory",
    "oldfieldname": "reqd",
    "oldfieldtype": "Check",
@@ -285,7 +312,11 @@
   },
   {
    "fieldname": "default",
+<<<<<<< HEAD
    "fieldtype": "Small Text",
+=======
+   "fieldtype": "Text",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "label": "Default",
    "oldfieldname": "default",
    "oldfieldtype": "Text"
@@ -365,6 +396,7 @@
    "default": "0",
    "fieldname": "allow_in_quick_entry",
    "fieldtype": "Check",
+<<<<<<< HEAD
    "label": "Allow in Quick Entry"
   },
   {
@@ -429,6 +461,14 @@
  "istable": 1,
  "links": [],
  "modified": "2020-10-29 06:11:57.661039",
+=======
+   "label": " Allow in Quick Entry "
+  }
+ ],
+ "idx": 1,
+ "istable": 1,
+ "modified": "2020-03-17 21:31:35.714416",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Custom",
  "name": "Customize Form Field",

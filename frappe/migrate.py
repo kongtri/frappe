@@ -83,6 +83,9 @@ Otherwise, check the server logs and ensure that all the required services are r
 		# updating installed applications data
 		frappe.get_single('Installed Applications').update_versions()
 
+		# updating installed applications data
+		frappe.get_single('Installed Applications').update_versions()
+
 		#run after_migrate hooks
 		for app in frappe.get_installed_apps():
 			for fn in frappe.get_hooks('after_migrate', app_name=app):

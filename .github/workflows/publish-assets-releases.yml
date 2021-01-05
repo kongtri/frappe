@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: 'Frappe Assets'
+=======
+name: Build and Publish Assets built for Releases
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 on:
   release:
@@ -8,8 +12,12 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
 
 jobs:
+<<<<<<< HEAD
   build-release-and-publish:
     name: 'Build and Publish Assets built for Releases'
+=======
+  build:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
     runs-on: ubuntu-latest
 
     steps:

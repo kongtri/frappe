@@ -156,8 +156,12 @@ frappe.ui.form.Layout = Class.extend({
 			parent: this.column.wrapper.get(0),
 			frm: this.frm,
 			render_input: render,
+<<<<<<< HEAD
 			doc: this.doc,
 			layout: this
+=======
+			doc: this.doc
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		});
 
 		fieldobj.layout = this;

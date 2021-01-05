@@ -60,6 +60,7 @@ def get_safe_globals():
 
 	out = NamespaceDict(
 		# make available limited methods of frappe
+<<<<<<< HEAD
 		json=json,
 		dict=dict,
 		log=frappe.log,
@@ -85,10 +86,35 @@ def get_safe_globals():
 			render_template=frappe.render_template,
 			msgprint=frappe.msgprint,
 			throw=frappe.throw,
+=======
+		json = json,
+		dict = dict,
+		frappe =  frappe._dict(
+			flags = frappe._dict(),
+
+			format = frappe.format_value,
+			format_value = frappe.format_value,
+			date_format = date_format,
+			format_date = frappe.utils.data.global_date_format,
+			form_dict = getattr(frappe.local, 'form_dict', {}),
+
+			get_meta = frappe.get_meta,
+			get_doc = frappe.get_doc,
+			get_cached_doc = frappe.get_cached_doc,
+			get_list = frappe.get_list,
+			get_all = frappe.get_all,
+			get_system_settings = frappe.get_system_settings,
+
+			utils = datautils,
+			get_url = frappe.utils.get_url,
+			render_template = frappe.render_template,
+			msgprint = frappe.msgprint,
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			sendmail = frappe.sendmail,
 			get_print = frappe.get_print,
 			attach_print = frappe.attach_print,
 
+<<<<<<< HEAD
 			user=user,
 			get_fullname=frappe.utils.get_fullname,
 			get_gravatar=frappe.utils.get_gravatar_url,
@@ -97,6 +123,16 @@ def get_safe_globals():
 			session=frappe._dict(
 				user=user,
 				csrf_token=frappe.local.session.data.csrf_token if getattr(frappe.local, "session", None) else ''
+=======
+			user = user,
+			get_fullname = frappe.utils.get_fullname,
+			get_gravatar = frappe.utils.get_gravatar_url,
+			full_name = frappe.local.session.data.full_name if getattr(frappe.local, "session", None) else "Guest",
+			request = getattr(frappe.local, 'request', {}),
+			session = frappe._dict(
+				user = user,
+				csrf_token = frappe.local.session.data.csrf_token if getattr(frappe.local, "session", None) else ''
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			),
 			make_get_request = frappe.integrations.utils.make_get_request,
 			make_post_request = frappe.integrations.utils.make_post_request,
@@ -107,6 +143,7 @@ def get_safe_globals():
 		style=frappe._dict(
 			border_color='#d1d8dd'
 		),
+<<<<<<< HEAD
 		get_toc=get_toc,
 		get_next_link=get_next_link,
 		_=frappe._,
@@ -116,6 +153,17 @@ def get_safe_globals():
 		html2text=html2text,
 		dev_server=1 if os.environ.get('DEV_SERVER', False) else 0,
 		run_script=run_script
+=======
+		get_toc =  get_toc,
+		get_next_link = get_next_link,
+		_ =  frappe._,
+		_dict = frappe._dict,
+		get_shade = get_shade,
+		scrub =  scrub,
+		guess_mimetype = mimetypes.guess_type,
+		html2text = html2text,
+		dev_server =  1 if os.environ.get('DEV_SERVER', False) else 0
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	)
 
 	add_module_properties(frappe.exceptions, out.frappe, lambda obj: inspect.isclass(obj) and issubclass(obj, Exception))
@@ -227,7 +275,11 @@ VALID_UTILS = (
 "get_time_str",
 "get_user_date_format",
 "get_user_time_format",
+<<<<<<< HEAD
 "format_date",
+=======
+"formatdate",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 "format_time",
 "format_datetime",
 "format_duration",
@@ -289,6 +341,10 @@ VALID_UTILS = (
 "to_markdown",
 "md_to_html",
 "is_subset",
+<<<<<<< HEAD
 "generate_hash",
 "formatdate"
+=======
+"generate_hash"
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 )

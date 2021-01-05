@@ -6,7 +6,11 @@ from __future__ import unicode_literals
 import unittest
 import frappe
 from frappe.core.doctype.data_import.importer import Importer
+<<<<<<< HEAD
 from frappe.utils import getdate, format_duration
+=======
+from frappe.utils import getdate
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 doctype_name = 'DocType for Import'
 
@@ -26,7 +30,10 @@ class TestImporter(unittest.TestCase):
 
 		self.assertEqual(doc1.description, 'test description')
 		self.assertEqual(doc1.number, 1)
+<<<<<<< HEAD
 		self.assertEqual(format_duration(doc1.duration), '3h')
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		self.assertEqual(doc1.table_field_1[0].child_title, 'child title')
 		self.assertEqual(doc1.table_field_1[0].child_description, 'child description')
@@ -43,10 +50,14 @@ class TestImporter(unittest.TestCase):
 		self.assertEqual(doc1.table_field_1_again[1].child_date, getdate('2021-09-22'))
 
 		self.assertEqual(doc2.description, 'test description 2')
+<<<<<<< HEAD
 		self.assertEqual(format_duration(doc2.duration), '4d 3h')
 
 		self.assertEqual(doc3.another_number, 5)
 		self.assertEqual(format_duration(doc3.duration), '5d 5h 45m')
+=======
+		self.assertEqual(doc3.another_number, 5)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def test_data_import_preview(self):
 		import_file = get_import_file('sample_import_file')
@@ -54,7 +65,11 @@ class TestImporter(unittest.TestCase):
 		preview = data_import.get_preview_from_template()
 
 		self.assertEqual(len(preview.data), 4)
+<<<<<<< HEAD
 		self.assertEqual(len(preview.columns), 16)
+=======
+		self.assertEqual(len(preview.columns), 15)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def test_data_import_without_mandatory_values(self):
 		import_file = get_import_file('sample_import_file_without_mandatory')
@@ -161,7 +176,10 @@ def create_doctype_if_not_exists(doctype_name, force=False):
 			{'label': 'Title', 'fieldname': 'title', 'reqd': 1, 'fieldtype': 'Data'},
 			{'label': 'Description', 'fieldname': 'description', 'fieldtype': 'Small Text'},
 			{'label': 'Date', 'fieldname': 'date', 'fieldtype': 'Date'},
+<<<<<<< HEAD
 			{'label': 'Duration', 'fieldname': 'duration', 'fieldtype': 'Duration'},
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			{'label': 'Number', 'fieldname': 'number', 'fieldtype': 'Int'},
 			{'label': 'Number', 'fieldname': 'another_number', 'fieldtype': 'Int'},
 			{'label': 'Table Field 1', 'fieldname': 'table_field_1', 'fieldtype': 'Table', 'options': table_1_name},

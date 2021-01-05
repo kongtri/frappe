@@ -20,7 +20,10 @@
   "smtp_server",
   "use_tls",
   "use_ssl_for_outgoing",
+<<<<<<< HEAD
   "append_emails_to_sent_folder",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   "smtp_port"
  ],
  "fields": [
@@ -112,20 +115,27 @@
   },
   {
    "default": "0",
+<<<<<<< HEAD
    "fieldname": "append_emails_to_sent_folder",
    "fieldtype": "Check",
    "label": "Append Emails to Sent Folder"
   },
   {
    "default": "0",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "fieldname": "use_ssl_for_outgoing",
    "fieldtype": "Check",
    "label": "Use SSL for Outgoing"
   }
  ],
  "icon": "icon-inbox",
+<<<<<<< HEAD
  "links": [],
  "modified": "2019-12-18 15:57:34.445308",
+=======
+ "modified": "2020-10-28 16:01:27.036523",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Email",
  "name": "Email Domain",

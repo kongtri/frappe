@@ -137,6 +137,11 @@ data-fieldname="{{ df.fieldname }}" data-fieldtype="{{ df.fieldtype }}"
 	{% elif df.fieldtype=="HTML" %}
 		{{ frappe.render_template(df.options, {"doc":doc}) }}
 	{% elif df.fieldtype=="Currency" %}
+<<<<<<< HEAD
+=======
+		{{ doc.get_formatted(df.fieldname, doc, translated=df.translatable) }}
+	{% else %}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		{{ doc.get_formatted(df.fieldname, parent_doc or doc, translated=df.translatable) }}
 	{% else %}
 		{%- set parent = parent_doc or doc -%}

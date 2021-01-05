@@ -394,6 +394,7 @@ export default class GridRow {
 		// sync get_query
 		field.get_query = this.grid.get_field(df.fieldname).get_query;
 
+<<<<<<< HEAD
 		if (!field.df.onchange_modified) {
 			var field_on_change_function = field.df.onchange;
 			field.df.onchange = function(e) {
@@ -404,6 +405,13 @@ export default class GridRow {
 			field.df.onchange_modified = true;
 		}
 
+=======
+		var field_on_change_function = field.df.onchange;
+		field.df.onchange = function(e) {
+			field_on_change_function && field_on_change_function(e);
+			me.grid.grid_rows[field.doc.idx - 1].refresh_field(field.df.fieldname);
+		};
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		field.refresh();
 		if(field.$input) {
 			field.$input

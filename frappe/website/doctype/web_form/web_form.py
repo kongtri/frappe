@@ -15,10 +15,15 @@ from frappe.core.doctype.file.file import get_max_file_size, remove_file_by_url
 from frappe.custom.doctype.customize_form.customize_form import docfield_properties
 from frappe.desk.form.meta import get_code_files_via_hooks
 from frappe.integrations.utils import get_payment_gateway_controller
+<<<<<<< HEAD
 from frappe.modules.utils import export_module_json, get_doc_module
 from frappe.utils import cstr
 from frappe.website.utils import get_comment_list
 from frappe.website.website_generator import WebsiteGenerator
+=======
+from six import iteritems
+from frappe.permissions import has_web_form_permission
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 
 class WebForm(WebsiteGenerator):
@@ -500,6 +505,7 @@ def delete_multiple(web_form_name, docnames):
 	if restricted_docnames:
 		raise frappe.PermissionError("You do not have permisssion to delete " + ", ".join(restricted_docnames))
 
+<<<<<<< HEAD
 
 def check_webform_perm(doctype, name):
 	doc = frappe.get_doc(doctype, name)
@@ -507,6 +513,8 @@ def check_webform_perm(doctype, name):
 		if doc.has_webform_permission():
 			return True
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 @frappe.whitelist(allow_guest=True)
 def get_web_form_filters(web_form_name):
 	web_form = frappe.get_doc("Web Form", web_form_name)

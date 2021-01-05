@@ -8,7 +8,11 @@ from frappe import _
 import frappe.permissions
 import re, csv, os
 from frappe.utils.csvutils import UnicodeWriter
+<<<<<<< HEAD
 from frappe.utils import cstr, formatdate, format_datetime, parse_json, cint, format_duration
+=======
+from frappe.utils import cstr, formatdate, format_datetime, parse_json, cint
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 from frappe.core.doctype.data_import_legacy.importer import get_data_keys
 from six import string_types
 from frappe.core.doctype.access_log.access_log import make_access_log

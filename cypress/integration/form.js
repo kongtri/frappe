@@ -1,10 +1,20 @@
 context('Form', () => {
 	before(() => {
 		cy.login();
+<<<<<<< HEAD
 		cy.visit('/desk#workspace/Website');
 		return cy.window().its('frappe').then(frappe => {
 			return frappe.call("frappe.tests.ui_test_helpers.create_contact_records");
 		});
+=======
+		cy.visit('/desk');
+		cy.window().its('frappe').then(frappe => {
+			frappe.call("frappe.tests.ui_test_helpers.create_contact_records");
+		});
+	});
+	beforeEach(() => {
+		cy.visit('/desk');
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	});
 	it('create a new form', () => {
 		cy.visit('/desk#Form/ToDo/New ToDo 1');
@@ -25,7 +35,10 @@ context('Form', () => {
 	});
 	it('navigates between documents with child table list filters applied', () => {
 		cy.visit('/desk#List/Contact');
+<<<<<<< HEAD
 		cy.location('hash').should('eq', '#List/Contact/List');
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		cy.get('.tag-filters-area .btn:contains("Add Filter")').click();
 		cy.get('.fieldname-select-area').should('exist');
 		cy.get('.fieldname-select-area input').type('Number{enter}', { force: true });
@@ -35,7 +48,11 @@ context('Form', () => {
 		cy.get('.prev-doc').should('be.visible').click();
 		cy.get('.msgprint-dialog .modal-body').contains('No further records').should('be.visible');
 		cy.get('.btn-modal-close:visible').click();
+<<<<<<< HEAD
 		cy.get('.next-doc').click();
+=======
+		cy.get('.next-doc').click({ force: true });
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		cy.wait(200);
 		cy.contains('Test Form Contact 2').should('not.exist');
 		cy.get('.page-title .title-text').should('contain', 'Test Form Contact 1');
@@ -45,6 +62,7 @@ context('Form', () => {
 			list_view.filter_area.filter_list.clear_filters();
 		});
 	});
+<<<<<<< HEAD
 	it('validates behaviour of Data options validations in child table', () => {
 		// test email validations for set_invalid controller
 		let website_input = 'website.in';
@@ -62,4 +80,6 @@ context('Form', () => {
 			expect(style.backgroundColor).to.equal(expectBackgroundColor);
 		});
 	});
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 });

@@ -260,8 +260,15 @@ class Communication(Document):
 	# Timeline Links
 	def set_timeline_links(self):
 		contacts = []
+<<<<<<< HEAD
 		create_contact_enabled = self.email_account and frappe.db.get_value("Email Account", self.email_account, "create_contact")
 		contacts = get_contacts([self.sender, self.recipients, self.cc, self.bcc], auto_create_contact=create_contact_enabled)
+=======
+		if (self.email_account and frappe.db.get_value("Email Account", self.email_account, "create_contact")) or \
+			frappe.flags.in_test:
+
+			contacts = get_contacts([self.sender, self.recipients, self.cc, self.bcc])
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		for contact_name in contacts:
 			self.add_link('Contact', contact_name)
@@ -355,7 +362,11 @@ def get_contacts(email_strings, auto_create_contact=False):
 		email = get_email_without_link(email)
 		contact_name = get_contact_name(email)
 
+<<<<<<< HEAD
 		if not contact_name and email and auto_create_contact:
+=======
+		if not contact_name and email:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			email_parts = email.split("@")
 			first_name = frappe.unscrub(email_parts[0])
 

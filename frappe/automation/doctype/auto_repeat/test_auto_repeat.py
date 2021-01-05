@@ -156,6 +156,7 @@ class TestAutoRepeat(unittest.TestCase):
 		doc = make_auto_repeat(frequency='Daily', reference_document=todo.name, start_date=add_days(today(), -2))
 		self.assertEqual(getdate(doc.next_schedule_date), current_date)
 
+<<<<<<< HEAD
 	def test_submit_on_creation(self):
 		doctype = 'Test Submittable DocType'
 		create_submittable_doctype(doctype)
@@ -175,6 +176,8 @@ class TestAutoRepeat(unittest.TestCase):
 		)
 		self.assertEquals(docnames[0].docstatus, 1)
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def make_auto_repeat(**args):
 	args = frappe._dict(args)

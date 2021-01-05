@@ -11,7 +11,11 @@ from frappe.model.db_query import DatabaseQuery
 from frappe import _
 from six import string_types, StringIO
 from frappe.core.doctype.access_log.access_log import make_access_log
+<<<<<<< HEAD
 from frappe.utils import cstr, format_duration
+=======
+from frappe.utils import cstr
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 
 @frappe.whitelist()
@@ -36,7 +40,10 @@ def get_form_params():
 	data.pop('data', None)
 	data.pop('ignore_permissions', None)
 	data.pop('view', None)
+<<<<<<< HEAD
 	data.pop('user', None)
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	if "csrf_token" in data:
 		del data["csrf_token"]

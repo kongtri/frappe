@@ -1,5 +1,8 @@
 {
+<<<<<<< HEAD
  "actions": [],
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "creation": "2017-09-04 20:57:20.129205",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -18,9 +21,18 @@
   "bucket",
   "endpoint_url",
   "column_break_13",
+<<<<<<< HEAD
   "backup_details_section",
   "frequency",
   "backup_files"
+=======
+  "region",
+  "backup_details_section",
+  "frequency",
+  "backup_files",
+  "column_break_18",
+  "backup_limit"
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  ],
  "fields": [
   {
@@ -34,12 +46,19 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Send Notifications To",
+<<<<<<< HEAD
    "mandatory_depends_on": "enabled",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "reqd": 1
   },
   {
    "default": "1",
+<<<<<<< HEAD
    "description": "By default, emails are only sent for failed backups.",
+=======
+   "description": "Note: By default emails for failed backups are sent.",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "fieldname": "send_email_for_successful_backup",
    "fieldtype": "Check",
    "label": "Send Email for Successful Backup"
@@ -49,7 +68,10 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Backup Frequency",
+<<<<<<< HEAD
    "mandatory_depends_on": "enabled",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "options": "Daily\nWeekly\nMonthly\nNone",
    "reqd": 1
   },
@@ -58,7 +80,10 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Access Key ID",
+<<<<<<< HEAD
    "mandatory_depends_on": "enabled",
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "reqd": 1
   },
   {
@@ -66,6 +91,7 @@
    "fieldtype": "Password",
    "in_list_view": 1,
    "label": "Access Key Secret",
+<<<<<<< HEAD
    "mandatory_depends_on": "enabled",
    "reqd": 1
   },
@@ -89,6 +115,43 @@
    "label": "API Access"
   },
   {
+=======
+   "reqd": 1
+  },
+  {
+   "default": "us-east-1",
+   "description": "See https://docs.aws.amazon.com/de_de/general/latest/gr/rande.html#s3_region for details.",
+   "fieldname": "region",
+   "fieldtype": "Select",
+   "label": "Region",
+   "options": "us-east-1\nus-east-2\nus-west-1\nus-west-2\nap-south-1\nap-southeast-1\nap-southeast-2\nap-northeast-1\nap-northeast-2\nap-northeast-3\nca-central-1\ncn-north-1\ncn-northwest-1\neu-central-1\neu-west-1\neu-west-2\neu-west-3\neu-north-1\nsa-east-1"
+  },
+  {
+   "fieldname": "endpoint_url",
+   "fieldtype": "Data",
+   "label": "Endpoint URL"
+  },
+  {
+   "fieldname": "bucket",
+   "fieldtype": "Data",
+   "label": "Bucket Name",
+   "reqd": 1
+  },
+  {
+   "description": "Set to 0 for no limit on the number of backups taken.",
+   "fieldname": "backup_limit",
+   "fieldtype": "Int",
+   "label": "Backup Limit",
+   "reqd": 1
+  },
+  {
+   "depends_on": "enabled",
+   "fieldname": "api_access_section",
+   "fieldtype": "Section Break",
+   "label": "API Access"
+  },
+  {
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
@@ -124,12 +187,23 @@
    "fieldname": "backup_files",
    "fieldtype": "Check",
    "label": "Backup Files"
+<<<<<<< HEAD
+=======
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   }
  ],
  "hide_toolbar": 1,
  "issingle": 1,
+<<<<<<< HEAD
  "links": [],
  "modified": "2020-12-07 15:30:55.047689",
+=======
+ "modified": "2020-04-13 21:15:35.197420",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Integrations",
  "name": "S3 Backup Settings",

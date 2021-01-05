@@ -29,12 +29,21 @@ frappe.ui.form.QuickEntryForm = Class.extend({
 
 	setup: function() {
 		return new Promise(resolve => {
+<<<<<<< HEAD
 			frappe.model.with_doctype(this.doctype, () => {
 				this.check_quick_entry_doc();
 				this.set_meta_and_mandatory_fields();
 				if (this.is_quick_entry() || this.force) {
 					this.render_dialog();
 					resolve(this);
+=======
+			frappe.model.with_doctype(this.doctype, function() {
+				me.check_quick_entry_doc();
+				me.set_meta_and_mandatory_fields();
+				if(me.is_quick_entry()) {
+					me.render_dialog();
+					resolve(me);
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 				} else {
 					// no quick entry, open full form
 					frappe.quick_entry = null;
@@ -54,8 +63,13 @@ frappe.ui.form.QuickEntryForm = Class.extend({
 		let fields = this.meta.fields;
 
 		// prepare a list of mandatory, bold and allow in quick entry fields
+<<<<<<< HEAD
 		this.mandatory = fields.filter(df => {
 			return ((df.reqd || df.bold || df.allow_in_quick_entry) && !df.read_only);
+=======
+		this.mandatory = $.map(fields, function(d) {
+			return ((d.reqd || d.bold || d.allow_in_quick_entry) && !d.read_only) ? $.extend({}, d) : null;
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		});
 	},
 

@@ -42,6 +42,7 @@ frappe.ui.form.on("Contact", {
 		});
 		frm.refresh_field("links");
 
+<<<<<<< HEAD
 		let numbers = frm.doc.phone_nos;
 		if (numbers && numbers.length && frappe.phone_call.handler) {
 			frm.add_custom_button(__('Call'), () => {
@@ -52,6 +53,8 @@ frappe.ui.form.on("Contact", {
 			});
 		}
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if (frm.doc.links) {
 			frappe.call({
 				method: "frappe.contacts.doctype.contact.contact.address_query",

@@ -56,7 +56,11 @@
 		}
 		window.dev_server = {{ dev_server }};
 		window.socketio_port = {{ (frappe.socketio_port or 'null') }};
+<<<<<<< HEAD
 	</script>
+=======
+    </script>
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 </head>
 <body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {% endif -%}>
 	{%- block banner -%}

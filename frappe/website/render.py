@@ -91,7 +91,7 @@ def render(path=None, http_status_code=None):
 	return build_response(path, data, http_status_code or 200)
 
 def is_static_file(path):
-	if ('.' not in path):
+	if '.' not in path:
 		return False
 	extn = path.rsplit('.', 1)[-1]
 	if extn in ('html', 'md', 'js', 'xml', 'css', 'txt', 'py', 'json'):
@@ -149,8 +149,13 @@ def add_preload_headers(response):
 			preload.append(("style", elem.get("href")))
 
 		links = []
+<<<<<<< HEAD
 		for _type, link in preload:
 			links.append("<{}>; rel=preload; as={}".format(link, _type))
+=======
+		for type, link in preload:
+			links.append("</{}>; rel=preload; as={}".format(link.lstrip("/"), type))
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		if links:
 			response.headers["Link"] = ",".join(links)

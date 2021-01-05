@@ -144,7 +144,11 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 	show_restricted_list_indicator_if_applicable() {
 		const match_rules_list = frappe.perm.get_match_rules(this.doctype);
 		if (match_rules_list.length) {
+<<<<<<< HEAD
 			this.restricted_list = $(`<button class="restricted-button">${__('Restricted')}</button>`)
+=======
+			this.restricted_list = $(`<button class="restricted-list form-group">${__('Restricted')}</button>`)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 				.prepend('<span class="octicon octicon-lock"></span>')
 				.click(() => this.show_restrictions(match_rules_list))
 				.appendTo(this.page.page_form);
@@ -784,7 +788,10 @@ frappe.views.ListView = class ListView extends frappe.views.BaseList {
 		if (this.settings.get_form_link) {
 			return this.settings.get_form_link(doc);
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		const docname = doc.name.match(/[%'"\s]/)
 			? encodeURIComponent(doc.name)
 			: doc.name;

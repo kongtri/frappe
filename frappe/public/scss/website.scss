@@ -17,9 +17,30 @@
 @import 'footer';
 @import 'login';
 
+<<<<<<< HEAD
 .ql-editor.read-mode {
 	padding: 0;
 	line-height: 1.6;
+=======
+html {
+  height: 100%;
+}
+
+body {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	font-size: 16px;
+
+	> div {
+		flex: 1 0 auto;
+	}
+}
+
+footer {
+	flex-shrink: 0;
+}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	h1,
 	h2,
@@ -198,6 +219,7 @@ h5.modal-title {
 	float: right;
 }
 
+<<<<<<< HEAD
 .btn-primary-light {
 	@include button-variant(
 		$background: $primary-light,
@@ -251,11 +273,23 @@ h5.modal-title {
 
 .about-footer {
 	padding-top: 1rem;
+=======
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+	vertical-align: middle;
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 }
 
 .logged-in > .nav-link {
 	max-width: 200px;
 	@extend .ellipsis;
+<<<<<<< HEAD
 	max-width: 100%;
 	vertical-align: middle;
 }
+=======
+}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

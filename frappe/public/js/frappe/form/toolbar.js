@@ -186,10 +186,18 @@ frappe.ui.form.Toolbar = Class.extend({
 	},
 	set_indicator: function() {
 		var indicator = frappe.get_indicator(this.frm.doc);
+<<<<<<< HEAD
 		if (this.frm.save_disabled && indicator && [__('Saved'), __('Not Saved')].includes(indicator[0])) {
 			return;
 		}
 		if(indicator) {
+=======
+
+		if (indicator) {
+			if (this.frm.save_disabled && [__('Saved'), __('Not Saved')].includes(indicator[0])) {
+				return;
+			}
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			this.page.set_indicator(indicator[0], indicator[1]);
 		} else {
 			this.page.clear_indicator();
@@ -272,12 +280,20 @@ frappe.ui.form.Toolbar = Class.extend({
 			});
 		}
 
+<<<<<<< HEAD
 		if (frappe.user_roles.includes("System Manager")) {
+=======
+		if (frappe.user_roles.includes("System Manager") && me.frm.meta.issingle === 0) {
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			let is_doctype_form = me.frm.doctype === 'DocType';
 			let doctype = is_doctype_form ? me.frm.docname : me.frm.doctype;
 			let is_doctype_custom = is_doctype_form ? me.frm.doc.custom : false;
 
+<<<<<<< HEAD
 			if (doctype != 'DocType' && !is_doctype_custom && me.frm.meta.issingle === 0) {
+=======
+			if (doctype != 'DocType' && !is_doctype_custom) {
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 				this.page.add_menu_item(__("Customize"), function() {
 					if (me.frm.meta && me.frm.meta.custom) {
 						frappe.set_route('Form', 'DocType', doctype);

@@ -6,7 +6,11 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _, safe_encode
 from frappe.model.document import Document
+<<<<<<< HEAD
 from frappe.twofactor import (should_run_2fa, authenticate_for_2factor,confirm_otp_token)
+=======
+from frappe.twofactor import (should_run_2fa, authenticate_for_2factor, confirm_otp_token)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 class LDAPSettings(Document):
 	def validate(self):

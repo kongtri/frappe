@@ -120,11 +120,17 @@ frappe.ui.form.Timeline = class Timeline {
 	display_automatic_link_email() {
 		let docinfo = this.frm.get_docinfo();
 
+<<<<<<< HEAD
 		if (docinfo.document_email) {
 			let link = __("Send an email to {0} to link it here", [`<b><a class="timeline-email-import-link copy-to-clipboard">${docinfo.document_email}</a></b>`]);
 			const email_link = $('.timeline-email-import');
 			email_link.removeClass('hide');
 			email_link.html(link);
+=======
+		if (docinfo.document_email){
+			let link = __("Send an email to {0} to link it here", [`<b><a class="timeline-email-import-link copy-to-clipboard">${docinfo.document_email}</a></b>`]);
+			$('.timeline-email-import').html(link);
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		}
 	}
 
@@ -619,7 +625,11 @@ frappe.ui.form.Timeline = class Timeline {
 				if (parts.length) {
 					let message;
 					if (updater_reference_link) {
+<<<<<<< HEAD
 						message = __("changed value of {0} {1}", [parts.join(', '), updater_reference_link]);
+=======
+						message = __("changed value of {0} {1}", [parts.join(', ').bold(), updater_reference_link]);
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 					} else {
 						message = __("changed value of {0}", [parts.join(', ')]);
 					}

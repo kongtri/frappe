@@ -360,6 +360,7 @@
    "label": "Length"
   },
   {
+<<<<<<< HEAD
    "fieldname": "mandatory_depends_on",
    "fieldtype": "Code",
    "label": "Mandatory Depends On",
@@ -372,10 +373,13 @@
    "length": 255
   },
   {
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
    "default": "0",
    "fieldname": "allow_in_quick_entry",
    "fieldtype": "Check",
    "label": "Allow in Quick Entry"
+<<<<<<< HEAD
   },
   {
    "default": "0",
@@ -411,13 +415,19 @@
    "fieldname": "non_negative",
    "fieldtype": "Check",
    "label": "Non Negative"
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
   }
  ],
  "icon": "fa fa-glass",
  "idx": 1,
+<<<<<<< HEAD
  "index_web_pages_for_search": 1,
  "links": [],
  "modified": "2020-10-29 06:14:43.073329",
+=======
+ "modified": "2020-03-17 21:30:18.102333",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
  "modified_by": "Administrator",
  "module": "Custom",
  "name": "Custom Field",

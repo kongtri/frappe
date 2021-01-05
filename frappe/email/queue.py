@@ -6,15 +6,26 @@ import frappe
 import sys
 from six.moves import html_parser as HTMLParser
 import smtplib, quopri, json
+<<<<<<< HEAD
 from frappe import msgprint, _, safe_decode, safe_encode, enqueue
+=======
+from frappe import msgprint, _, safe_decode, safe_encode
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 from frappe.email.smtp import SMTPServer, get_outgoing_email_account
 from frappe.email.email_body import get_email, get_formatted_html, add_attachment
 from frappe.utils.verified_command import get_signed_params, verify_request
 from html2text import html2text
 from frappe.utils import get_url, nowdate, now_datetime, add_days, split_emails, cstr, cint
 from rq.timeouts import JobTimeoutException
+<<<<<<< HEAD
 from six import text_type, string_types, PY3
 from email.parser import Parser
+=======
+from frappe.utils.scheduler import log
+from six import text_type, string_types, PY3
+from email.parser import Parser
+from frappe.utils import validate_email_address
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 
 class EmailLimitCrossedError(frappe.ValidationError): pass
@@ -436,6 +447,10 @@ def send_one(email, smtpserver=None, auto_commit=True, now=False):
 			if recipient.status != "Not Sent":
 				continue
 
+			if not validate_email_address(recipient.recipient):
+				recipient.status = "Error"
+				continue
+
 			message = prepare_message(email, recipient.recipient, recipients_list)
 			if not frappe.flags.in_test:
 				smtpserver.sess.sendmail(email.sender, recipient.recipient, message)
@@ -445,14 +460,24 @@ def send_one(email, smtpserver=None, auto_commit=True, now=False):
 				(now_datetime(), recipient.name), auto_commit=auto_commit)
 
 		email_sent_to_any_recipient = any("Sent" == s.status for s in recipients_list)
+<<<<<<< HEAD
 
 		#if all are sent set status
 		if email_sent_to_any_recipient:
+=======
+		email_sent_to_all_recipients = all("Sent" == s.status for s in recipients_list)
+
+		#if all are sent set status
+		if email_sent_to_all_recipients:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			frappe.db.sql("""update `tabEmail Queue` set status='Sent', modified=%s where name=%s""",
+				(now_datetime(), email.name), auto_commit=auto_commit)
+		elif email_sent_to_any_recipient:
+			frappe.db.sql("""update `tabEmail Queue` set status='Partially Sent', modified=%s where name=%s""",
 				(now_datetime(), email.name), auto_commit=auto_commit)
 		else:
 			frappe.db.sql("""update `tabEmail Queue` set status='Error', error=%s
-				where name=%s""", ("No recipients to send to", email.name), auto_commit=auto_commit)
+				where name=%s""", ("No valid recipients to send to", email.name), auto_commit=auto_commit)
 		if frappe.flags.in_test:
 			frappe.flags.sent_mail = message
 			return
@@ -584,8 +609,14 @@ def prepare_message(email, recipient, recipients_list):
 
 	return safe_encode(message.as_string())
 
+<<<<<<< HEAD
 def clear_outbox(days=None):
 	"""Remove low priority older than 31 days in Outbox or configured in Log Settings.
+=======
+def clear_outbox():
+	"""Remove low priority older than 31 days in Outbox and expire mails not sent for 7 days.
+	Called daily via scheduler.
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	Note: Used separate query to avoid deadlock
 	"""
 	if not days:

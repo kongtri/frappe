@@ -156,8 +156,12 @@ doc_events = {
 			"frappe.event_streaming.doctype.event_update_log.event_update_log.notify_consumers"
 		],
 		"on_change": [
+<<<<<<< HEAD
 			"frappe.social.doctype.energy_point_rule.energy_point_rule.process_energy_points",
 			"frappe.automation.doctype.milestone_tracker.milestone_tracker.evaluate_milestone"
+=======
+			"frappe.social.doctype.energy_point_rule.energy_point_rule.process_energy_points"
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		]
 	},
 	"Event": {
@@ -192,6 +196,11 @@ scheduler_events = {
 		"frappe.email.doctype.email_account.email_account.pull",
 		"frappe.email.doctype.email_account.email_account.notify_unreplied",
 		"frappe.integrations.doctype.razorpay_settings.razorpay_settings.capture_payment",
+<<<<<<< HEAD
+=======
+		"frappe.twofactor.delete_all_barcodes_for_users",
+		"frappe.website.doctype.web_page.web_page.check_publish_status",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		'frappe.utils.global_search.sync_global_search',
 		"frappe.monitor.flush",
 	],
@@ -223,8 +232,12 @@ scheduler_events = {
 		"frappe.automation.doctype.auto_repeat.auto_repeat.make_auto_repeat_entry",
 		"frappe.automation.doctype.auto_repeat.auto_repeat.set_auto_repeat_as_completed",
 		"frappe.email.doctype.unhandled_email.unhandled_email.remove_old_unhandled_emails",
+<<<<<<< HEAD
 		"frappe.core.doctype.prepared_report.prepared_report.delete_expired_prepared_reports",
 		"frappe.core.doctype.log_settings.log_settings.run_log_clean_up"
+=======
+		"frappe.core.doctype.prepared_report.prepared_report.delete_expired_prepared_reports"
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	],
 	"daily_long": [
 		"frappe.integrations.doctype.dropbox_settings.dropbox_settings.take_backups_daily",
@@ -284,7 +297,10 @@ setup_wizard_exception = [
 ]
 
 before_migrate = ['frappe.patches.v11_0.sync_user_permission_doctype_before_migrate.execute']
+<<<<<<< HEAD
 after_migrate = ['frappe.website.doctype.website_theme.website_theme.after_migrate']
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 otp_methods = ['OTP App','Email','SMS']
 user_privacy_documents = [

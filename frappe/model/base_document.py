@@ -16,7 +16,10 @@ from frappe.utils.password import get_decrypted_password, set_encrypted_password
 from frappe.utils import (cint, flt, now, cstr, strip_html,
 	sanitize_html, sanitize_email, cast_fieldtype)
 from frappe.utils.html_utils import unescape_html
+<<<<<<< HEAD
 from bs4 import BeautifulSoup
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 max_positive_value = {
 	'smallint': 2 ** 15,

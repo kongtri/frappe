@@ -6,7 +6,11 @@ from __future__ import unicode_literals
 import unittest
 import frappe
 import frappe.monitor
+<<<<<<< HEAD
 from frappe.utils import set_request
+=======
+from frappe.tests import set_request
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 from frappe.utils.response import build_response
 from frappe.monitor import MONITOR_REDIS_KEY
 

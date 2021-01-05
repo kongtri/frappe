@@ -9,7 +9,11 @@ import timeit
 import json
 from datetime import datetime, date
 from frappe import _
+<<<<<<< HEAD
 from frappe.utils import cint, flt, update_progress_bar, cstr, duration_to_seconds
+=======
+from frappe.utils import cint, flt, update_progress_bar, cstr
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 from frappe.utils.csvutils import read_csv_content, get_csv_content_from_google_sheets
 from frappe.utils.xlsxutils import (
 	read_xlsx_file_from_attached_file,
@@ -234,6 +238,7 @@ class Importer:
 		else:
 			# throw if no changes
 			frappe.throw("No changes to update")
+<<<<<<< HEAD
 
 	def get_eta(self, current, total, processing_time):
 		self.last_eta = getattr(self, "last_eta", 0)
@@ -246,6 +251,20 @@ class Importer:
 	def export_errored_rows(self):
 		from frappe.utils.csvutils import build_csv_response
 
+=======
+
+	def get_eta(self, current, total, processing_time):
+		self.last_eta = getattr(self, "last_eta", 0)
+		remaining = total - current
+		eta = processing_time * remaining
+		if not self.last_eta or eta < self.last_eta:
+			self.last_eta = eta
+		return self.last_eta
+
+	def export_errored_rows(self):
+		from frappe.utils.csvutils import build_csv_response
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		if not self.data_import:
 			return
 
@@ -666,6 +685,7 @@ class Row:
 					}
 				)
 				return
+<<<<<<< HEAD
 		elif df.fieldtype == "Duration":
 			import re
 			is_valid_duration = re.match("^(?:(\d+d)?((^|\s)\d+h)?((^|\s)\d+m)?((^|\s)\d+s)?)$", value)
@@ -680,6 +700,8 @@ class Row:
 						)
 					}
 				)
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		return value
 
@@ -708,8 +730,11 @@ class Row:
 			value = flt(value)
 		elif df.fieldtype in ["Date", "Datetime"]:
 			value = self.get_date(value, col)
+<<<<<<< HEAD
 		elif df.fieldtype == "Duration":
 			value = duration_to_seconds(value)
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		return value
 
@@ -778,6 +803,7 @@ class Row:
 					"message": _("{0} is a mandatory field").format(frappe.bold(field_label)),
 				}
 			)
+<<<<<<< HEAD
 		else:
 			fields_string = ", ".join([frappe.bold(get_field_label(df)) for df in fields])
 			self.warnings.append(
@@ -895,6 +921,125 @@ class Column:
 					}
 				)
 		else:
+=======
+		else:
+			fields_string = ", ".join([frappe.bold(get_field_label(df)) for df in fields])
+			self.warnings.append(
+				{
+					"row": self.row_number,
+					"message": _("{0} are mandatory fields").format(fields_string),
+				}
+			)
+
+	def get_values(self, indexes):
+		return [self.data[i] for i in indexes]
+
+	def get(self, index):
+		return self.data[index]
+
+	def as_list(self):
+		return self.data
+
+
+class Header(Row):
+	def __init__(self, index, row, doctype, raw_data, column_to_field_map=None):
+		self.index = index
+		self.row_number = index + 1
+		self.data = row
+		self.doctype = doctype
+		column_to_field_map = column_to_field_map or frappe._dict()
+
+		self.seen = []
+		self.columns = []
+
+		for j, header in enumerate(row):
+			column_values = [get_item_at_index(r, j) for r in raw_data]
+			map_to_field = column_to_field_map.get(str(j))
+			column = Column(j, header, self.doctype, column_values, map_to_field, self.seen)
+			self.seen.append(header)
+			self.columns.append(column)
+
+		doctypes = []
+		for col in self.columns:
+			if not col.df:
+				continue
+			if col.df.parent == self.doctype:
+				doctypes.append((col.df.parent, None))
+			else:
+				doctypes.append((col.df.parent, col.df.child_table_df))
+
+		self.doctypes = sorted(
+			list(set(doctypes)), key=lambda x: -1 if x[0] == self.doctype else 1
+		)
+
+	def get_column_indexes(self, doctype, tablefield=None):
+		def is_table_field(df):
+			if tablefield:
+				return df.child_table_df.fieldname == tablefield.fieldname
+			return True
+
+		return [
+			col.index
+			for col in self.columns
+			if not col.skip_import
+			and col.df
+			and col.df.parent == doctype
+			and is_table_field(col.df)
+		]
+
+	def get_columns(self, indexes):
+		return [self.columns[i] for i in indexes]
+
+
+class Column:
+	seen = []
+	fields_column_map = {}
+
+	def __init__(self, index, header, doctype, column_values, map_to_field=None, seen=[]):
+		self.index = index
+		self.column_number = index + 1
+		self.doctype = doctype
+		self.header_title = header
+		self.column_values = column_values
+		self.map_to_field = map_to_field
+		self.seen = seen
+
+		self.date_format = None
+		self.df = None
+		self.skip_import = None
+		self.warnings = []
+
+		self.meta = frappe.get_meta(doctype)
+		self.parse()
+		self.validate_values()
+
+	def parse(self):
+		header_title = self.header_title
+		column_number = str(self.column_number)
+		skip_import = False
+
+		if self.map_to_field and self.map_to_field != "Don't Import":
+			df = get_df_for_column_header(self.doctype, self.map_to_field)
+			if df:
+				self.warnings.append(
+					{
+						"message": _("Mapping column {0} to field {1}").format(
+							frappe.bold(header_title or "<i>Untitled Column</i>"), frappe.bold(df.label)
+						),
+						"type": "info",
+					}
+				)
+			else:
+				self.warnings.append(
+					{
+						"message": _("Could not map column {0} to field {1}").format(
+							column_number, self.map_to_field
+						),
+						"type": "info",
+					}
+				)
+		else:
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			df = get_df_for_column_header(self.doctype, header_title)
 			# df = df_by_labels_and_fieldnames.get(header_title)
 
@@ -985,6 +1130,7 @@ class Column:
 		if not self.df:
 			return
 
+<<<<<<< HEAD
 		if self.skip_import:
 			return
 
@@ -1200,6 +1346,220 @@ def get_id_field(doctype):
 		return autoname_field
 	return frappe._dict({"label": "ID", "fieldname": "name", "fieldtype": "Data"})
 
+=======
+		if self.df.fieldtype == "Link":
+			# find all values that dont exist
+			values = list(set([cstr(v) for v in self.column_values[1:] if v]))
+			exists = [
+				d.name for d in frappe.db.get_all(self.df.options, filters={"name": ("in", values)})
+			]
+			not_exists = list(set(values) - set(exists))
+			if not_exists:
+				missing_values = ", ".join(not_exists)
+				self.warnings.append(
+					{
+						"col": self.column_number,
+						"message": (
+							"The following values do not exist for {}: {}".format(
+								self.df.options, missing_values
+							)
+						),
+						"type": "warning",
+					}
+				)
+		elif self.df.fieldtype in ("Date", "Time", "Datetime"):
+			# guess date format
+			self.date_format = self.guess_date_format_for_column()
+			if not self.date_format:
+				self.date_format = "%Y-%m-%d"
+				self.warnings.append(
+					{
+						"col": self.column_number,
+						"message": _(
+							"Date format could not be determined from the values in"
+							" this column. Defaulting to yyyy-mm-dd."
+						),
+						"type": "info",
+					}
+				)
+		elif self.df.fieldtype == "Select":
+			options = get_select_options(self.df)
+			if options:
+				values = list(set([cstr(v) for v in self.column_values[1:] if v]))
+				invalid = list(set(values) - set(options))
+				if invalid:
+					valid_values = ", ".join([frappe.bold(o) for o in options])
+					invalid_values = ", ".join([frappe.bold(i) for i in invalid])
+					self.warnings.append(
+						{
+							"col": self.column_number,
+							"message": (
+								"The following values are invalid: {0}. Values must be"
+								" one of {1}".format(invalid_values, valid_values)
+							),
+						}
+					)
+
+	def as_dict(self):
+		d = frappe._dict()
+		d.index = self.index
+		d.column_number = self.column_number
+		d.doctype = self.doctype
+		d.header_title = self.header_title
+		d.map_to_field = self.map_to_field
+		d.date_format = self.date_format
+		d.df = self.df
+		if hasattr(self.df, "is_child_table_field"):
+			d.is_child_table_field = self.df.is_child_table_field
+			d.child_table_df = self.df.child_table_df
+		d.skip_import = self.skip_import
+		d.warnings = self.warnings
+		return d
+
+
+def build_fields_dict_for_column_matching(parent_doctype):
+	"""
+	Build a dict with various keys to match with column headers and value as docfield
+	The keys can be label or fieldname
+	{
+		'Customer': df1,
+		'customer': df1,
+		'Due Date': df2,
+		'due_date': df2,
+		'Item Code (Sales Invoice Item)': df3,
+		'Sales Invoice Item:item_code': df3,
+	}
+	"""
+
+	def get_standard_fields(doctype):
+		meta = frappe.get_meta(doctype)
+		if meta.istable:
+			standard_fields = [
+				{"label": "Parent", "fieldname": "parent"},
+				{"label": "Parent Type", "fieldname": "parenttype"},
+				{"label": "Parent Field", "fieldname": "parentfield"},
+				{"label": "Row Index", "fieldname": "idx"},
+			]
+		else:
+			standard_fields = [
+				{"label": "Owner", "fieldname": "owner"},
+				{"label": "Document Status", "fieldname": "docstatus", "fieldtype": "Int"},
+			]
+
+		out = []
+		for df in standard_fields:
+			df = frappe._dict(df)
+			df.parent = doctype
+			out.append(df)
+		return out
+
+	parent_meta = frappe.get_meta(parent_doctype)
+	out = {}
+
+	# doctypes and fieldname if it is a child doctype
+	doctypes = [[parent_doctype, None]] + [
+		[df.options, df] for df in parent_meta.get_table_fields()
+	]
+
+	for doctype, table_df in doctypes:
+		# name field
+		name_by_label = (
+			"ID" if doctype == parent_doctype else "ID ({0})".format(table_df.label)
+		)
+		name_by_fieldname = (
+			"name" if doctype == parent_doctype else "{0}.name".format(table_df.fieldname)
+		)
+		name_df = frappe._dict(
+			{
+				"fieldtype": "Data",
+				"fieldname": "name",
+				"label": "ID",
+				"reqd": 1,  # self.import_type == UPDATE,
+				"parent": doctype,
+			}
+		)
+
+		if doctype != parent_doctype:
+			name_df.is_child_table_field = True
+			name_df.child_table_df = table_df
+
+		out[name_by_label] = name_df
+		out[name_by_fieldname] = name_df
+
+		# other fields
+		fields = get_standard_fields(doctype) + frappe.get_meta(doctype).fields
+		for df in fields:
+			label = (df.label or "").strip()
+			fieldtype = df.fieldtype or "Data"
+			parent = df.parent or parent_doctype
+			if fieldtype not in no_value_fields:
+				if parent_doctype == doctype:
+					# for parent doctypes keys will be
+					# Label
+					# label
+					# Label (label)
+					if not out.get(label):
+						# if Label is already set, don't set it again
+						# in case of duplicate column headers
+						out[label] = df
+					out[df.fieldname] = df
+					label_with_fieldname = "{0} ({1})".format(label, df.fieldname)
+					out[label_with_fieldname] = df
+				else:
+					# in case there are multiple table fields with the same doctype
+					# for child doctypes keys will be
+					# Label (Table Field Label)
+					# table_field.fieldname
+					table_fields = parent_meta.get(
+						"fields", {"fieldtype": ["in", table_fieldtypes], "options": parent}
+					)
+					for table_field in table_fields:
+						by_label = "{0} ({1})".format(label, table_field.label)
+						by_fieldname = "{0}.{1}".format(table_field.fieldname, df.fieldname)
+
+						# create a new df object to avoid mutation problems
+						if isinstance(df, dict):
+							new_df = frappe._dict(df.copy())
+						else:
+							new_df = df.as_dict()
+
+						new_df.is_child_table_field = True
+						new_df.child_table_df = table_field
+						out[by_label] = new_df
+						out[by_fieldname] = new_df
+
+	# if autoname is based on field
+	# add an entry for "ID (Autoname Field)"
+	autoname_field = get_autoname_field(parent_doctype)
+	if autoname_field:
+		out["ID ({})".format(autoname_field.label)] = autoname_field
+		# ID field should also map to the autoname field
+		out["ID"] = autoname_field
+		out["name"] = autoname_field
+
+	return out
+
+
+def get_df_for_column_header(doctype, header):
+	def build_fields_dict_for_doctype():
+		return build_fields_dict_for_column_matching(doctype)
+
+	df_by_labels_and_fieldname = frappe.cache().hget(
+		"data_import_column_header_map", doctype, generator=build_fields_dict_for_doctype
+	)
+	return df_by_labels_and_fieldname.get(header)
+
+
+# utilities
+
+
+def get_id_field(doctype):
+	autoname_field = get_autoname_field(doctype)
+	if autoname_field:
+		return autoname_field
+	return frappe._dict({"label": "ID", "fieldname": "name", "fieldtype": "Data"})
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def get_autoname_field(doctype):
 	meta = frappe.get_meta(doctype)

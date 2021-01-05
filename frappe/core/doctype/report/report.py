@@ -49,8 +49,13 @@ class Report(Document):
 		self.export_doc()
 
 	def on_trash(self):
+<<<<<<< HEAD
 		if (self.is_standard == 'Yes'
 			and not cint(getattr(frappe.local.conf, 'developer_mode', 0))
+=======
+		if (self.is_standard == 'Yes' 
+			and not cint(getattr(frappe.local.conf, 'developer_mode', 0)) 
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			and not frappe.flags.in_patch):
 			frappe.throw(_("You are not allowed to delete Standard Report"))
 		delete_custom_role('report', self.name)
@@ -107,8 +112,13 @@ class Report(Document):
 		if not self.query.lower().startswith("select"):
 			frappe.throw(_("Query must be a SELECT"), title=_('Report Document Error'))
 
+<<<<<<< HEAD
 		result = [list(t) for t in frappe.db.sql(self.query, filters, debug=True)]
 		columns = self.get_columns() or [cstr(c[0]) for c in frappe.db.get_description()]
+=======
+		result = [list(t) for t in frappe.db.sql(self.query, filters)]
+		columns = [cstr(c[0]) for c in frappe.db.get_description()]
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		return [columns, result]
 
@@ -144,20 +154,50 @@ class Report(Document):
 		# server script
 		loc = {"filters": frappe._dict(filters), 'data':None, 'result':None}
 		safe_exec(self.report_script, None, loc)
+<<<<<<< HEAD
 		if loc['data']:
 			return loc['data']
 		else:
 			return self.get_columns(), loc['result']
+=======
+		return loc['data']
+
+	def get_data(self, filters=None, limit=None, user=None, as_dict=False, ignore_prepared_report=False):
+		columns = []
+		out = []
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	def get_data(self, filters=None, limit=None, user=None, as_dict=False, ignore_prepared_report=False):
 		if self.report_type in ('Query Report', 'Script Report', 'Custom Report'):
+<<<<<<< HEAD
 			columns, result = self.run_query_report(filters, user, ignore_prepared_report)
 		else:
 			columns, result = self.run_standard_report(filters, limit, user)
+=======
+			# query and script reports
+			data = frappe.desk.query_report.run(self.name,
+				filters=filters, user=user, ignore_prepared_report=ignore_prepared_report)
+
+			for d in data.get('columns'):
+				if isinstance(d, dict):
+					col = frappe._dict(d)
+					if not col.fieldname:
+						col.fieldname = col.label
+					columns.append(col)
+				else:
+					fieldtype, options = "Data", None
+					parts = d.split(':')
+					if len(parts) > 1:
+						if parts[1]:
+							fieldtype, options = parts[1], None
+							if fieldtype and '/' in fieldtype:
+								fieldtype, options = fieldtype.split('/')
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		if as_dict:
 			result = self.build_data_dict(result, columns)
 
+<<<<<<< HEAD
 		return columns, result
 
 	def run_query_report(self, filters, user, ignore_prepared_report=False):
@@ -171,6 +211,40 @@ class Report(Document):
 				if not col.fieldname:
 					col.fieldname = col.label
 				columns.append(col)
+=======
+			out += data.get('result')
+		else:
+			# standard report
+			params = json.loads(self.json)
+
+			if params.get('fields'):
+				columns = params.get('fields')
+			elif params.get('columns'):
+				columns = params.get('columns')
+			else:
+				columns = [['name', self.ref_doctype]]
+				for df in frappe.get_meta(self.ref_doctype).fields:
+					if df.in_list_view:
+						columns.append([df.fieldname, self.ref_doctype])
+
+			_filters = params.get('filters') or []
+
+			if filters:
+				for key, value in iteritems(filters):
+					condition, _value = '=', value
+					if isinstance(value, (list, tuple)):
+						condition, _value = value
+					_filters.append([key, condition, _value])
+
+			def _format(parts):
+				# sort by is saved as DocType.fieldname, covert it to sql
+				return '`tab{0}`.`{1}`'.format(*parts)
+
+			if params.get('sort_by'):
+				order_by = _format(params.get('sort_by').split('.')) + ' ' + params.get('sort_order')
+			elif params.get('order_by'):
+				order_by = params.get('order_by')
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 			else:
 				fieldtype, options = "Data", None
 				parts = d.split(':')
@@ -255,8 +329,29 @@ class Report(Document):
 		else:
 			order_by = Report._format([self.ref_doctype, 'modified']) + ' desc'
 
+<<<<<<< HEAD
 		if params.get('sort_by_next'):
 			order_by += ', ' + Report._format(params.get('sort_by_next').split('.')) + ' ' + params.get('sort_order_next')
+=======
+			group_by = None
+			if params.get('group_by'):
+				group_by_args = frappe._dict(params['group_by'])
+				group_by = group_by_args['group_by']
+				order_by = '_aggregate_column desc'
+
+			result = frappe.get_list(self.ref_doctype,
+				fields = [
+					get_group_by_field(group_by_args, c[1]) if c[0] == '_aggregate_column' and group_by_args
+					else _format([c[1], c[0]])
+					for c in columns
+				],
+				filters=_filters,
+				order_by = order_by,
+				as_list=True,
+				limit=limit,
+				group_by=group_by,
+				user=user)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 		group_by = None
 		if params.get('group_by'):
@@ -278,7 +373,20 @@ class Report(Document):
 				if fieldname == '_aggregate_column':
 					label = get_group_by_column_label(group_by_args, meta)
 				else:
+<<<<<<< HEAD
 					label = meta.get_label(fieldname)
+=======
+					if fieldname == '_aggregate_column':
+						label = get_group_by_column_label(group_by_args, meta)
+					else:
+						label = meta.get_label(fieldname)
+
+					field = frappe._dict(fieldname=fieldname, label=label)
+					# since name is the primary key for a document, it will always be a Link datatype
+					if fieldname == "name":
+						field.fieldtype = "Link"
+						field.options = doctype
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 				field = frappe._dict(fieldname=fieldname, label=label)
 

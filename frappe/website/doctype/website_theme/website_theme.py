@@ -5,8 +5,12 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
+<<<<<<< HEAD
 from frappe.utils import get_path
 from os.path import join as join_path, exists as path_exists, abspath, splitext
+=======
+from os.path import join as join_path, exists as path_exists, abspath
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 class WebsiteTheme(Document):
 	def validate(self):
@@ -51,22 +55,32 @@ class WebsiteTheme(Document):
 	def generate_bootstrap_theme(self):
 		from subprocess import Popen, PIPE
 
+<<<<<<< HEAD
 		self.theme_scss = frappe.render_template('frappe/website/doctype/website_theme/website_theme_template.scss', self.as_dict())
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		# create theme file in site public files folder
 		folder_path = abspath(frappe.utils.get_files_path('website_theme', is_private=False))
 		# create folder if not exist
 		frappe.create_folder(folder_path)
 
+<<<<<<< HEAD
 		if self.custom:
 			self.delete_old_theme_files(folder_path)
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		# add a random suffix
 		suffix = frappe.generate_hash('Website Theme', 8) if self.custom else 'style'
 		file_name = frappe.scrub(self.name) + '_' + suffix + '.css'
 		output_path = join_path(folder_path, file_name)
 
+<<<<<<< HEAD
 		self.theme_scss = content = get_scss(self)
+=======
+		content = self.theme_scss or ''
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		content = content.replace('\n', '\\n')
 		command = ['node', 'generate_bootstrap_theme.js', output_path, content]
 
@@ -133,6 +147,7 @@ def get_active_theme():
 		except frappe.DoesNotExistError:
 			pass
 
+<<<<<<< HEAD
 
 
 def get_scss(website_theme):
@@ -184,3 +199,5 @@ def after_migrate():
 	doc = frappe.get_doc('Website Theme', website_theme)
 	doc.generate_bootstrap_theme()
 	doc.save()
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe

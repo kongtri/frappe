@@ -184,6 +184,7 @@ def parse_latest_non_beta_release(response):
 		return sorted(version_list, key=Version, reverse=True)[0]
 
 	return None
+<<<<<<< HEAD
 
 
 def check_release_on_github(app: str):
@@ -200,6 +201,8 @@ def check_release_on_github(app: str):
 
 	from giturlparse import parse
 	from giturlparse.parser import ParserError
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	try:
 		# Check if repo remote is on github
@@ -230,6 +233,16 @@ def check_release_on_github(app: str):
 		if latest_non_beta_release:
 			return Version(latest_non_beta_release), owner
 
+<<<<<<< HEAD
+=======
+	org_name = remote_url.split('/')[3]
+	r = requests.get('https://api.github.com/repos/{}/{}/releases'.format(org_name, app))
+	if r.ok:
+		lastest_non_beta_release = parse_latest_non_beta_release(r.json())
+		return Version(lastest_non_beta_release), org_name
+	# In case of an improper response or if there are no releases
+	return None
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def add_message_to_redis(update_json):
 	# "update-message" will store the update message string

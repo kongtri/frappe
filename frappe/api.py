@@ -6,6 +6,10 @@ import base64
 import binascii
 import json
 
+<<<<<<< HEAD
+=======
+from six import string_types
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 from six.moves.urllib.parse import urlencode, urlparse
 
 import frappe
@@ -13,6 +17,10 @@ import frappe.client
 import frappe.handler
 from frappe import _
 from frappe.utils.response import build_response
+<<<<<<< HEAD
+=======
+
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def handle():
 	"""
@@ -38,7 +46,10 @@ def handle():
 	`/api/resource/{doctype}/{name}?run_method={method}` will run a whitelisted controller method
 	"""
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	validate_auth()
 
 	parts = frappe.request.path[1:].split("/",3)
@@ -116,12 +127,17 @@ def handle():
 						frappe.local.form_dict['fields'] = json.loads(frappe.local.form_dict['fields'])
 					frappe.local.form_dict.setdefault('limit_page_length', 20)
 					frappe.local.response.update({
+<<<<<<< HEAD
 						"data":  frappe.call(
 							frappe.client.get_list,
 							doctype,
 							**frappe.local.form_dict
 						)
 					})
+=======
+						"data":  frappe.call(frappe.client.get_list,
+							doctype, **frappe.local.form_dict)})
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 				if frappe.local.request.method == "POST":
 					data = get_request_form_data()
@@ -142,11 +158,21 @@ def handle():
 
 def get_request_form_data():
 	if frappe.local.form_dict.data is None:
+<<<<<<< HEAD
 		data = frappe.safe_decode(frappe.local.request.get_data())
 	else:
 		data = frappe.local.form_dict.data
 
 	return frappe.parse_json(data)
+=======
+		data = json.loads(frappe.safe_decode(frappe.local.request.get_data()))
+	else:
+		data = frappe.local.form_dict.data
+		if isinstance(data, string_types):
+			data = json.loads(frappe.local.form_dict.data)
+
+	return data
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 def validate_auth():
 	if frappe.get_request_header("Authorization") is None:
@@ -159,14 +185,22 @@ def validate_auth():
 	authorization_type = authorization_header[0].lower()
 
 	if len(authorization_header) == 1:
+<<<<<<< HEAD
 		frappe.throw(_('Invalid Authorization headers, add a token with a prefix from one of the following: {0}.').format(VALID_AUTH_PREFIX_STRING), frappe.InvalidAuthorizationHeader)
+=======
+		frappe.throw(_('Invalid Authorization headers, add a token with a prefix from one of the following: {0}.'.format(VALID_AUTH_PREFIX_STRING)), frappe.InvalidAuthorizationHeader)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 	if authorization_type == "bearer":
 		validate_oauth(authorization_header)
 	elif authorization_type in VALID_AUTH_PREFIX_TYPES:
 		validate_auth_via_api_keys(authorization_header)
 	else:
+<<<<<<< HEAD
 		frappe.throw(_('Invalid Authorization Type {0}, must be one of {1}.').format(authorization_type, VALID_AUTH_PREFIX_STRING), frappe.InvalidAuthorizationPrefix)
+=======
+		frappe.throw(_('Invalid Authorization Type {0}, must be one of {1}.'.format(authorization_type, VALID_AUTH_PREFIX_STRING)), frappe.InvalidAuthorizationPrefix)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 
 
 def validate_oauth(authorization_header):
@@ -212,6 +246,7 @@ def validate_auth_via_api_keys(authorization_header):
 
 	try:
 		auth_type, auth_token = authorization_header
+<<<<<<< HEAD
 		authorization_source = frappe.get_request_header("Frappe-Authorization-Source")
 		if auth_type.lower() == 'basic':
 			api_key, api_secret = frappe.safe_decode(base64.b64decode(auth_token)).split(":")
@@ -219,22 +254,37 @@ def validate_auth_via_api_keys(authorization_header):
 		elif auth_type.lower() == 'token':
 			api_key, api_secret = auth_token.split(":")
 			validate_api_key_secret(api_key, api_secret, authorization_source)
+=======
+		if auth_type.lower() == 'basic':
+			api_key, api_secret = frappe.safe_decode(base64.b64decode(auth_token)).split(":")
+			validate_api_key_secret(api_key, api_secret)
+		elif auth_type.lower() == 'token':
+			api_key, api_secret = auth_token.split(":")
+			validate_api_key_secret(api_key, api_secret)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 	except binascii.Error:
 		frappe.throw(_("Failed to decode token, please provide a valid base64-encoded token."), frappe.InvalidAuthorizationToken)
 	except (AttributeError, TypeError, ValueError):
 		frappe.throw(_("Invalid token, please provide a valid token with prefix 'Basic' or 'Token'."), frappe.InvalidAuthorizationToken)
 
 
+<<<<<<< HEAD
 
 def validate_api_key_secret(api_key, api_secret, frappe_authorization_source=None):
 	"""frappe_authorization_source to provide api key and secret for a doctype apart from User"""
 	doctype = frappe_authorization_source or 'User'
 	doc = frappe.db.get_value(
 		doctype=doctype,
+=======
+def validate_api_key_secret(api_key, api_secret):
+	user = frappe.db.get_value(
+		doctype="User",
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		filters={"api_key": api_key},
 		fieldname=["name"]
 	)
 	form_dict = frappe.local.form_dict
+<<<<<<< HEAD
 	doc_secret = frappe.utils.password.get_decrypted_password(doctype, doc, fieldname='api_secret')
 	if api_secret == doc_secret:
 		if doctype == 'User':
@@ -247,4 +297,9 @@ def validate_api_key_secret(api_key, api_secret, frappe_authorization_source=Non
 			user = frappe.db.get_value(doctype, doc, 'user')
 		if frappe.local.login_manager.user in ('', 'Guest'):
 			frappe.set_user(user)
+=======
+	user_secret = frappe.utils.password.get_decrypted_password("User", user, fieldname='api_secret')
+	if api_secret == user_secret:
+		frappe.set_user(user)
+>>>>>>> 57cc556de61c52f8d0600aeaae657bdf1ded8fbe
 		frappe.local.form_dict = form_dict
